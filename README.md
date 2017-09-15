@@ -1,4 +1,4 @@
-# Coin-Hive
+# Coin-Hive [![Build Status](https://travis-ci.org/cazala/coin-hive.svg?branch=master)](https://travis-ci.org/cazala/coin-hive)
 
 Mine [Monero (XMR)](https://getmonero.org/) using [Coin-Hive](https://coin-hive.com/) from NodeJS.
 

@@ -1,6 +1,6 @@
 var EventEmitter = require('events');
 var puppeteer = require('puppeteer');
-var defaults = require('./defaults');
+var defaults = require('../config/defaults');
 
 // Browser
 var browser = null;
@@ -36,7 +36,6 @@ class Puppeteer extends EventEmitter {
     if (this.page) {
       return this.page;
     }
-    console.log('puppeteer: initializing...');
 
     const page = await getPage();
     await page.goto(`http://${this.host}:${this.port}`);
@@ -46,8 +45,6 @@ class Puppeteer extends EventEmitter {
     await page.evaluate((siteKey, interval) => window.init(siteKey, interval), this.siteKey, this.interval);
 
     this.page = page;
-    console.log('puppeteer: initialized!');
-
     return this.page;
   }
 

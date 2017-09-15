@@ -1,0 +1,38 @@
+#!/usr/bin/env node
+'use strict';
+const CoinHive = require('../src');
+console.log('Initializing...');
+
+(async () => {
+
+  const siteKey = process.argv[2];
+  const help = `Usage: 'coin-hive <site-key> [, <interval>, <port>, <host>]'
+
+  - <site-key>: You CoinHive Site Key
+  - <interval>: Interval between updates (logs)
+  - <port>: Port for the miner server
+  - <host>: Host for the miner server
+  `;
+
+  switch (process.argv[2]) {
+    case '-h':
+    case '--help':
+      console.log(help);
+      break;
+    default: {
+
+      var miner = await CoinHive(siteKey);
+      await miner.start();
+
+      console.log('Initialized!');
+
+      miner.on('found', () => console.log('Found!'))
+      miner.on('accepted', () => console.log('Accepted!'))
+      miner.on('update', (data) => console.log(`
+Hashes per second: ${data.hashesPerSecond}
+Total hashes: ${data.totalHashes}
+Accepted hashes: ${data.acceptedHashes}
+      `));
+    }
+  }
+})()

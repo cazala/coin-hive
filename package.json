@@ -11,5 +11,8 @@
   "dependencies": {
     "express": "^4.15.4",
     "puppeteer": "^0.10.2"
+  },
+  "bin": {
+    "coin-hive": "./bin/coin-hive"
   }
 }

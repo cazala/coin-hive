@@ -37,7 +37,7 @@ Accepted hashes: ${data.acceptedHashes}
 ## CLI
 
 ```
-coin-hive ZM4gjqQ0jh0jbZ3tZDByOXAjyotDbo00
+coin-hive <site-key>
 ```
 
 ## Requisites

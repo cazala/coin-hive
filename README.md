@@ -1,4 +1,4 @@
-# CoinHive
+# Coin-Hive
 
 Mine Monero (XMR) using Coin-Hive in NodeJS.
 
@@ -31,7 +31,7 @@ Accepted hashes: ${data.acceptedHashes}
 
   // Stop miner
   setTimeout(async () => await miner.stop(), 60000);
-})()
+})();
 ```
 
 ## CLI
@@ -39,4 +39,8 @@ Accepted hashes: ${data.acceptedHashes}
 ```
 coin-hive ZM4gjqQ0jh0jbZ3tZDByOXAjyotDbo00
 ```
+
+## Requisites
+
++ Node v8+
 

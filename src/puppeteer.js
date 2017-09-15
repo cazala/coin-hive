@@ -8,7 +8,7 @@ var getBrowser = async () => {
   if (browser) {
     return browser;
   }
-  browser = await puppeteer.launch();
+  browser = await puppeteer.launch({ args: ['--no-sandbox'] });
   return browser;
 }
 

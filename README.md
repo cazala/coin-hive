@@ -1,6 +1,6 @@
 # Coin-Hive
 
-Mine Monero (XMR) using Coin-Hive in NodeJS.
+Mine [Monero (XMR)](https://getmonero.org/) using [Coin-Hive](https://coin-hive.com/) from NodeJS.
 
 ## Install
 

@@ -4,9 +4,8 @@
   "description": "",
   "main": "src/index.js",
   "scripts": {
-    "test": "mocha test --timeout 60000"
+    "test": "mocha test --timeout 600000"
   },
-  "author": "",
   "license": "MIT",
   "dependencies": {
     "express": "^4.15.4",
@@ -16,6 +15,7 @@
     "coin-hive": "./bin/coin-hive"
   },
   "devDependencies": {
+    "expect": "^21.1.0",
     "mocha": "^3.5.3"
   },
   "repository": {

@@ -1,25 +1,32 @@
-var server = require('./server');
-var puppeteer = require('./puppeteer');
-var defaults = require('../config/defaults');
+const server = require('./server');
+const puppeteer = require('./puppeteer');
+const defaults = require('../config/defaults');
 
-module.exports = async function getRunner(siteKey = defaults.SITE_KEY) {
-
-  var port = process.env.PORT || defaults.PORT;
-  var host = process.env.HOST || defaults.HOST;
-
-  var miner = await new Promise((resolve, reject) => {
-    server().listen(port, host, async (err) => {
-      if (err) {
-        return reject(err);
+module.exports = async function getRunner(
+  siteKey = defaults.SITE_KEY,
+  interval = defaults.INTERVAL,
+  port = defaults.PORT,
+  host = defaults.HOST
+) {
+  const miner = await new Promise((resolve, reject) => {
+    var minerServer = server().listen(
+      process.env.SERVER_PORT || process.env.PORT || port,
+      process.env.SERVER_HOST || process.env.HOST || host,
+      async (err) => {
+        if (err) {
+          return reject(err);
+        }
+        return resolve(
+          puppeteer({
+            siteKey,
+            interval,
+            port,
+            host,
+            server: minerServer
+          })
+        );
       }
-      return resolve(
-        puppeteer({
-          siteKey,
-          port,
-          host,
-          interval: defaults.INTERVAL
-        }));
-    });
+    );
   });
   await miner.init();
   return miner;

@@ -50,6 +50,8 @@ coin-hive <site-key>
 
 - `miner.on(event, callback)`: Specify a callback for an event. The event types are:
 
+  - `update`: Informs `hashesPerSecond`, `totalHashes` and `acceptedHashes`.
+
   - `open`:	The connection to our mining pool was opened. Usually happens shortly after miner.start() was called.
 
   - `authed`:	The miner successfully authed with the mining pool and the siteKey was verified. Usually happens right after open.

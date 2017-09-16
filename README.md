@@ -26,7 +26,7 @@ var CoinHive = require('coin-hive');
   miner.on('update', (data) => console.log(`
 Hashes per second: ${data.hashesPerSecond}
 Total hashes: ${data.totalHashes}
-Accepted hashes: ${data.acceptedHashes}
+Accepted hashes: ${data.acceptedHashes/256}
   `));
 
   // Stop miner

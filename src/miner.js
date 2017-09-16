@@ -32,7 +32,7 @@ function start() {
       var update = {
         hashesPerSecond: miner.getHashesPerSecond(),
         totalHashes: miner.getTotalHashes(),
-        acceptedHashes: miner.getAcceptedHashes()
+        acceptedHashes: miner.getAcceptedHashes()/256
       }
       console.log('update:', update)
       window.update && window.update(update, intervalMs);

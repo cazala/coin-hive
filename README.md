@@ -42,7 +42,7 @@ coin-hive <site-key>
 
 ## API
 
-- `CoinHive(siteKey)`: Returns a promise of a `Miner` instance.
+- `CoinHive(siteKey)`: Returns a promise of a `Miner` instance. It requires a [Coin-Hive Site Key](https://coin-hive.com/settings/sites).
 
 - `miner.start()`: Connect to the pool and start mining. Returns a promise that will resolve once the miner is started.
 

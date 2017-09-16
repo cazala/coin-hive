@@ -77,7 +77,6 @@ class Puppeteer extends EventEmitter {
     try {
       if (this.server) {
         this.server.close();
-        console.log('server closed')
       }
     } catch (e) { console.log('Error closing server', e) }
     this.dead = true;

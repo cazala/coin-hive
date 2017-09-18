@@ -2,6 +2,10 @@
 
 Mine cryptocurrency [Monero (XMR)](https://getmonero.org/) using [Coin-Hive](https://coin-hive.com/) from node.js
 
+## Disclaimer 
+
+This project has nothing to do with `coin-hive.com`
+
 ## Install
 
 ```
@@ -48,6 +52,8 @@ coin-hive <site-key>
 
 - `miner.stop()`: Stop mining and disconnect from the pool. Returns a promise that will resolve once the miner is stopped.
 
+- `miner.kill()`: Stop mining, disconnect from the pool, shutdown the server and close the headless browser. Returns a promise that will resolve once the miner is dead.
+
 - `miner.on(event, callback)`: Specify a callback for an event. The event types are:
 
   - `update`: Informs `hashesPerSecond`, `totalHashes` and `acceptedHashes`.
@@ -66,7 +72,7 @@ coin-hive <site-key>
 
   - `accepted`:	A hash that was sent to the pool was accepted.
 
-- `miner.rpc(methodName, argsArray)`: This method allows to interact with the Coin-Hive miner instance. It returns a Promise that resolves the the value of the remote method that was called. The miner intance API can be [found here](https://coin-hive.com/documentation/miner#miner-is-running). Here's an example:
+- `miner.rpc(methodName, argsArray)`: This method allows you to interact with the Coin-Hive miner instance. It returns a Promise that resolves the the value of the remote method that was called. The miner intance API can be [found here](https://coin-hive.com/documentation/miner#miner-is-running). Here's an example:
 
 ```js
 var miner = await CoinHive('SITE_KEY');
@@ -95,7 +101,3 @@ All the following environment variables can be used to configure the miner from 
 ## Requisites
 
 + Node v8+
-
-## Disclaimer
-
-I have nothing to do with `coin-hive.com`

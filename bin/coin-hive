@@ -17,6 +17,7 @@ console.log('Initializing...');
   - <interval>: Interval between updates (logs)
   - <port>: Port for the miner server
   - <host>: Host for the miner server
+  - <threads>: Number of threads
   `;
 
   switch (process.argv[2]) {
@@ -41,6 +42,7 @@ console.log('Initializing...');
 Hashes per second: ${data.hashesPerSecond}
 Total hashes: ${data.totalHashes}
 Accepted hashes: ${data.acceptedHashes}
+Threads: ${data.threads}
       `));
     }
   }

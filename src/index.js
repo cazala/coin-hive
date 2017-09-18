@@ -6,7 +6,8 @@ module.exports = async function getRunner(
   siteKey = defaults.SITE_KEY,
   interval = defaults.INTERVAL,
   port = defaults.PORT,
-  host = defaults.HOST
+  host = defaults.HOST,
+  threads = defaults.THREADS
 ) {
   const miner = await new Promise((resolve, reject) => {
     var minerServer = server().listen(
@@ -22,6 +23,7 @@ module.exports = async function getRunner(
             interval,
             port,
             host,
+            threads,
             server: minerServer
           })
         );

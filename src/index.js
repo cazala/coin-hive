@@ -2,7 +2,7 @@ const server = require('./server');
 const puppeteer = require('./puppeteer');
 const defaults = require('../config/defaults');
 
-module.exports = async function getRunner({siteKey, interval, port, host}) {
+module.exports = async function getRunner({siteKey, interval, port, host, threads}) {
   const miner = await new Promise((resolve, reject) => {
     const minerServer = server().listen(port, host, async (err) => {
       if (err) {
@@ -15,6 +15,7 @@ module.exports = async function getRunner({siteKey, interval, port, host}) {
           interval,
           port,
           host,
+          threads,
           server: minerServer
         })
       );

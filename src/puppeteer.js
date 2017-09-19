@@ -4,7 +4,7 @@ const defaults = require('../config/defaults');
 
 class Puppeteer extends EventEmitter {
 
-  constructor({siteKey, interval, host, port, server}) {
+  constructor({siteKey, interval, host, port, server, threads}) {
     super();
     this.inited = false;
     this.dead = false;
@@ -13,7 +13,7 @@ class Puppeteer extends EventEmitter {
     this.server = server;
     this.browser = null;
     this.page = null;
-    this.options = {siteKey, interval}
+    this.options = {siteKey, interval, threads};
   }
 
   async getBrowser() {
@@ -48,7 +48,7 @@ class Puppeteer extends EventEmitter {
     await page.exposeFunction('found', () => this.emit('found'));
     await page.exposeFunction('accepted', () => this.emit('accepted'));
     await page.exposeFunction('update', (data, interval) => this.emit('update', data, interval));
-    await page.evaluate(({siteKey, interval}) => window.init({siteKey, interval}), this.options);
+    await page.evaluate(({siteKey, interval, threads}) => window.init({siteKey, interval, threads}), this.options);
 
     this.inited = true;
 

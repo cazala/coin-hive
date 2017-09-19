@@ -7,4 +7,5 @@ Options:
   --interval  Interval between updates (logs)
   --port      Port for the miner server
   --host      Host for the miner server
+  --threads   Number of threads for the miner
 

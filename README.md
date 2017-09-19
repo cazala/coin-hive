@@ -98,6 +98,8 @@ All the following environment variables can be used to configure the miner from 
 
 - `COINHIVE_PUPPETEER_URL`: In case you don't want to point puppeteer to the local server, you can use this to make it point somewhere else where the miner is served (ie: `PUPPETEER_URL=http://coin-hive.herokuapp.com`)
 
+- `COINHIVE_THREADS`: Number of threads
+
 ## Requisites
 
 + Node v8+

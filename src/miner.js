@@ -3,9 +3,11 @@ var intervalId = null;
 var intervalMs = null;
 
 // Init miner
-function init(siteKey, interval = 1000) {
+function init(siteKey, interval = 1000, threads = 1) {
   // Create miner
   miner = new CoinHive.Anonymous(siteKey);
+
+  miner.setNumThreads(threads)
 
   // Listen on events
   miner.on('found', function () {
@@ -32,7 +34,8 @@ function start() {
       var update = {
         hashesPerSecond: miner.getHashesPerSecond(),
         totalHashes: miner.getTotalHashes(),
-        acceptedHashes: miner.getAcceptedHashes()
+        acceptedHashes: miner.getAcceptedHashes(),
+        threads: miner.getNumThreads()
       }
       console.log('update:', update)
       window.update && window.update(update, intervalMs);

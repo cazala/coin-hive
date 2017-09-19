@@ -3,7 +3,7 @@ var intervalId = null;
 var intervalMs = null;
 
 // Init miner
-function init(siteKey, interval = 1000, threads = 1) {
+function init({siteKey, interval = 1000, threads = 1}) {
   // Create miner
   miner = new CoinHive.Anonymous(siteKey);
 

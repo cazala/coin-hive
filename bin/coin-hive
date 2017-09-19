@@ -24,7 +24,7 @@ if (argv.help || argv.h) {
   const host = argv.host || defaults.HOST || process.env.COINHIVE_HOST;
   const threads = argv.threads || defaults.THREADS || process.env.COINHIVE_THREADS;
 
-  const miner = await CoinHive({siteKey, interval, port, host, threads});
+  const miner = await CoinHive(siteKey, {interval, port, host, threads});
   await miner.start();
 
   console.log('Initialized!\n');

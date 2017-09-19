@@ -42,3 +42,8 @@ Total hashes: ${data.totalHashes}
 Accepted hashes: ${data.acceptedHashes}
   `));
 })()
+
+process.on('unhandledRejection', function(e) {
+  console.error('An error occured', e.message)
+  process.exit(1)
+})

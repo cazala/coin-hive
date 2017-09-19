@@ -2,7 +2,7 @@
 
 Mine cryptocurrency [Monero (XMR)](https://getmonero.org/) using [Coin-Hive](https://coin-hive.com/) from node.js
 
-## Disclaimer 
+## Disclaimer
 
 This project has nothing to do with `coin-hive.com`
 
@@ -88,15 +88,15 @@ await miner.rpc('getThrottle'); // 0.5
 
 All the following environment variables can be used to configure the miner from the outside:
 
-- `SITE_KEY`: Coin-Hive's Site Key
+- `COINHIVE_SITE_KEY`: Coin-Hive's Site Key
 
-- `INTERVAL`: The interval on which the miner reports an update
+- `COINHIVE_INTERVAL`: The interval on which the miner reports an update
 
-- `PORT`: The port that will be used to launch the server, and where puppeteer will point to
+- `COINHIVE_PORT`: The port that will be used to launch the server, and where puppeteer will point to
 
-- `HOST`: The host that will be used to launch the server, and where puppeteer will point to
+- `COINHIVE_HOST`: The host that will be used to launch the server, and where puppeteer will point to
 
-- `PUPPETEER_URL`: In case you don't want to point puppeteer to the local server, you can use this to make it point somewhere else where the miner is served (ie: `PUPPETEER_URL=http://coin-hive.herokuapp.com`)
+- `COINHIVE_PUPPETEER_URL`: In case you don't want to point puppeteer to the local server, you can use this to make it point somewhere else where the miner is served (ie: `PUPPETEER_URL=http://coin-hive.herokuapp.com`)
 
 ## Requisites
 

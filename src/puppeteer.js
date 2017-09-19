@@ -4,17 +4,16 @@ const defaults = require('../config/defaults');
 
 class Puppeteer extends EventEmitter {
 
-  constructor(siteKey, interval, port, host, server) {
+  constructor({siteKey, interval, host, port, server}) {
     super();
     this.inited = false;
     this.dead = false;
-    this.siteKey = siteKey;
-    this.interval = interval;
     this.host = host;
     this.port = port;
     this.server = server;
     this.browser = null;
     this.page = null;
+    this.options = {siteKey, interval}
   }
 
   async getBrowser() {
@@ -44,12 +43,12 @@ class Puppeteer extends EventEmitter {
     }
 
     const page = await this.getPage();
-    const url = process.env.PUPPETEER_URL || `http://${this.host}:${this.port}`;
+    const url = process.env.COINHIVE_PUPPETEER_URL || `http://${this.host}:${this.port}`;
     await page.goto(url);
     await page.exposeFunction('found', () => this.emit('found'));
     await page.exposeFunction('accepted', () => this.emit('accepted'));
     await page.exposeFunction('update', (data, interval) => this.emit('update', data, interval));
-    await page.evaluate((siteKey, interval) => window.init(siteKey, interval), this.siteKey, this.interval);
+    await page.evaluate(({siteKey, interval}) => window.init({siteKey, interval}), this.options);
 
     this.inited = true;
 
@@ -89,12 +88,5 @@ class Puppeteer extends EventEmitter {
 }
 
 module.exports = function getPuppeteer(options = {}) {
-
-  const siteKey = process.env.SITE_KEY || options.siteKey || defaults.SITE_KEY;
-  const interval = process.env.INTERVAL || options.interval || defaults.INTERVAL;
-  const port = process.env.PUPPETEER_PORT || process.env.PORT || options.port || defaults.PORT;
-  const host = process.env.PUPPETEER_HOST || process.env.HOST || options.host || defaults.HOST;
-  const server = options.server || null;
-
-  return new Puppeteer(siteKey, interval, port, host, server);
+  return new Puppeteer(options);
 }

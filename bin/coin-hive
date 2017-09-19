@@ -1,47 +1,42 @@
 #!/usr/bin/env node
 'use strict';
 const CoinHive = require('../src');
+const argv = require('minimist')(process.argv.slice(2));
 const defaults = require('../config/defaults');
-console.log('Initializing...');
+
+if (argv.help || argv.h) {
+  require('fs').createReadStream(`${__dirname}/help`).pipe(process.stdout);
+  return;
+}
 
 (async () => {
 
-  const siteKey = process.argv[2];
-  const interval = process.argv[3] || defaults.INTERVAL;
-  const port = process.argv[4] || defaults.PORT;
-  const host = process.argv[5] || defaults.HOST;
+  const siteKey = argv._[0] || process.env.COINHIVE_SITE_KEY;
 
-  const help = `Usage: 'coin-hive <site-key> [, <interval>, <port>, <host>]'
+  if (!siteKey) {
+    throw new Error('No site key found, please set environment "SITE_KEY" or give an argument to the binary');
+  }
 
-  - <site-key>: You CoinHive Site Key
-  - <interval>: Interval between updates (logs)
-  - <port>: Port for the miner server
-  - <host>: Host for the miner server
-  `;
+  console.log('Initializing...');
 
-  switch (process.argv[2]) {
-    case '-h':
-    case '--help':
-      console.log(help);
-      break;
-    default: {
+  const interval = argv.interval || defaults.INTERVAL || process.env.COINHIVE_INTERVAL;
+  const port = argv.port || defaults.PORT || process.env.COINHIVE_PORT;
+  const host = argv.host|| defaults.HOST || process.env.COINHIVE_HOST;
 
-      var miner = await CoinHive(siteKey, interval, port, host);
-      await miner.start();
+  const miner = await CoinHive({siteKey, interval, port, host});
+  await miner.start();
 
-      console.log('Initialized!\n');
-      console.log('Site Key:', siteKey);
-      console.log('Interval:', interval);
-      console.log('Port:', port);
-      console.log('Host:', host, '\n');
+  console.log('Initialized!\n');
+  console.log('Site Key:', siteKey);
+  console.log('Interval:', interval);
+  console.log('Port:', port);
+  console.log('Host:', host, '\n');
 
-      miner.on('found', () => console.log('Found!'))
-      miner.on('accepted', () => console.log('Accepted!'))
-      miner.on('update', (data) => console.log(`
+  miner.on('found', () => console.log('Found!'))
+  miner.on('accepted', () => console.log('Accepted!'))
+  miner.on('update', (data) => console.log(`
 Hashes per second: ${data.hashesPerSecond}
 Total hashes: ${data.totalHashes}
 Accepted hashes: ${data.acceptedHashes}
-      `));
-    }
-  }
+  `));
 })()

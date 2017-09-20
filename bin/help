@@ -1,0 +1,11 @@
+Usage: 'coin-hive <site-key>'
+
+<site-key>: You CoinHive Site Key
+
+Options:
+
+  --interval  Interval between updates (logs)
+  --port      Port for the miner server
+  --host      Host for the miner server
+  --threads   Number of threads for the miner
+

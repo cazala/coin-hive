@@ -1,10 +1,11 @@
 const expect = require('expect');
+const defaults = require('../config/defaults.js')
 const CoinHive = require('../src');
 
 describe('Coin-Hive', async () => {
 
   it('should mine', async () => {
-    var miner = await CoinHive();
+    var miner = await CoinHive(defaults.SITE_KEY);
     await miner.start();
     return new Promise(resolve => {
       miner.on('update', async (data) => {
@@ -17,7 +18,7 @@ describe('Coin-Hive', async () => {
   });
 
   it('should do RPC', async () => {
-    var miner = await CoinHive();
+    var miner = await CoinHive(defaults.SITE_KEY);
     let isRunning = await miner.rpc('isRunning');
     expect(isRunning).toBe(false);
     await miner.start();

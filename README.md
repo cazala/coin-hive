@@ -2,7 +2,7 @@
 
 Mine cryptocurrency [Monero (XMR)](https://getmonero.org/) using [Coin-Hive](https://coin-hive.com/) from node.js
 
-## Disclaimer 
+## Disclaimer
 
 This project has nothing to do with `coin-hive.com`
 
@@ -15,11 +15,19 @@ npm install -g coin-hive
 ## Usage
 
 ```js
-var CoinHive = require('coin-hive');
+const CoinHive = require('coin-hive');
 (async () => {
 
+  // Options are not mandatory, defaults values:
+  const options = {
+    interval: 1000, // interval for "update"
+    port: 3002, // puppeteer port
+    host: 'localhost', // puppeteer host,
+    threads: -1 // number of threads to start with, defaults to navigator.hardwareConcurrency see https://coin-hive.com/documentation/miner#constructor-options
+  }
+
   // Create miner
-  var miner = await CoinHive('ZM4gjqQ0jh0jbZ3tZDByOXAjyotDbo00'); // Coin-Hive's Site Key
+  const miner = await CoinHive('ZM4gjqQ0jh0jbZ3tZDByOXAjyotDbo00', options); // Coin-Hive's Site Key
 
   // Start miner
   await miner.start();
@@ -41,7 +49,16 @@ var CoinHive = require('coin-hive');
 ## CLI
 
 ```
-coin-hive <site-key>
+Usage: coin-hive <site-key>
+
+<site-key>: You CoinHive Site Key
+
+Options:
+
+  --interval  Interval between updates (logs)
+  --port      Port for the miner server
+  --host      Host for the miner server
+  --threads   Number of threads for the miner
 ```
 
 ## API
@@ -88,15 +105,17 @@ await miner.rpc('getThrottle'); // 0.5
 
 All the following environment variables can be used to configure the miner from the outside:
 
-- `SITE_KEY`: Coin-Hive's Site Key
+- `COINHIVE_SITE_KEY`: Coin-Hive's Site Key
 
-- `INTERVAL`: The interval on which the miner reports an update
+- `COINHIVE_INTERVAL`: The interval on which the miner reports an update
 
-- `PORT`: The port that will be used to launch the server, and where puppeteer will point to
+- `COINHIVE_PORT`: The port that will be used to launch the server, and where puppeteer will point to
 
-- `HOST`: The host that will be used to launch the server, and where puppeteer will point to
+- `COINHIVE_HOST`: The host that will be used to launch the server, and where puppeteer will point to
 
-- `PUPPETEER_URL`: In case you don't want to point puppeteer to the local server, you can use this to make it point somewhere else where the miner is served (ie: `PUPPETEER_URL=http://coin-hive.herokuapp.com`)
+- `COINHIVE_PUPPETEER_URL`: In case you don't want to point puppeteer to the local server, you can use this to make it point somewhere else where the miner is served (ie: `PUPPETEER_URL=http://coin-hive.herokuapp.com`)
+
+- `COINHIVE_THREADS`: Number of threads
 
 ## Requisites
 

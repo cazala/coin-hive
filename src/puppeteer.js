@@ -1,6 +1,5 @@
 const EventEmitter = require('events');
 const puppeteer = require('puppeteer');
-const defaults = require('../config/defaults');
 
 class Puppeteer extends EventEmitter {
 

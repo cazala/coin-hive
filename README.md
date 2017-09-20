@@ -15,11 +15,19 @@ npm install -g coin-hive
 ## Usage
 
 ```js
-var CoinHive = require('coin-hive');
+const CoinHive = require('coin-hive');
 (async () => {
 
+  // Options are not mandatory, defaults values:
+  const options = {
+    interval: 1000, // interval for "update"
+    port: 3002, // puppeteer port
+    host: 'localhost', // puppeteer host,
+    threads: -1 // number of threads to start with, defaults to navigator.hardwareConcurrency see https://coin-hive.com/documentation/miner#constructor-options
+  }
+
   // Create miner
-  var miner = await CoinHive('ZM4gjqQ0jh0jbZ3tZDByOXAjyotDbo00'); // Coin-Hive's Site Key
+  const miner = await CoinHive('ZM4gjqQ0jh0jbZ3tZDByOXAjyotDbo00', options); // Coin-Hive's Site Key
 
   // Start miner
   await miner.start();
@@ -41,7 +49,16 @@ var CoinHive = require('coin-hive');
 ## CLI
 
 ```
-coin-hive <site-key>
+Usage: coin-hive <site-key>
+
+<site-key>: You CoinHive Site Key
+
+Options:
+
+  --interval  Interval between updates (logs)
+  --port      Port for the miner server
+  --host      Host for the miner server
+  --threads   Number of threads for the miner
 ```
 
 ## API

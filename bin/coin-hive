@@ -4,8 +4,14 @@ const CoinHive = require('../src');
 const argv = require('minimist')(process.argv.slice(2));
 const defaults = require('../config/defaults');
 
+function help() {
+  const text = require('fs').createReadStream(`${__dirname}/help`)
+  text.pipe(process.stderr);
+  text.on('close', () => process.exit(1));
+}
+
 if (argv.help || argv.h) {
-  require('fs').createReadStream(`${__dirname}/help`).pipe(process.stdout);
+  help();
   return;
 }
 
@@ -14,25 +20,29 @@ if (argv.help || argv.h) {
   const siteKey = argv._[0] || process.env.COINHIVE_SITE_KEY;
 
   if (!siteKey) {
-    throw new Error('No site key found, please set environment "SITE_KEY" or give an argument to the binary');
+    console.error('No site key found, please set environment "SITE_KEY" or give an argument to the binary');
+    help();
+    return;
   }
 
   console.log('Initializing...');
 
-  const interval = argv.interval || defaults.INTERVAL || process.env.COINHIVE_INTERVAL;
-  const port = argv.port || defaults.PORT || process.env.COINHIVE_PORT;
-  const host = argv.host || defaults.HOST || process.env.COINHIVE_HOST;
-  const threads = argv.threads || defaults.THREADS || process.env.COINHIVE_THREADS;
+	const options = {
+    interval: argv.interval || process.env.COINHIVE_INTERVAL || defaults.interval ,
+    port: argv.port || process.env.COINHIVE_PORT || defaults.port,
+    host: argv.host || process.env.COINHIVE_HOST || defaults.host ,
+    threads: argv.threads || process.env.COINHIVE_THREADS || defaults.threads
+  }
 
-  const miner = await CoinHive(siteKey, {interval, port, host, threads});
+  const miner = await CoinHive(siteKey, options);
   await miner.start();
 
   console.log('Initialized!\n');
-  console.log('Site Key:', siteKey);
-  console.log('Interval:', interval);
-  console.log('Port:', port);
-  console.log('Host:', host, '\n');
-  console.log('Threads:', threads, '\n');
+  console.log('Site Key:', options.siteKey);
+  console.log('Interval:', options.interval);
+  console.log('Port:', options.port);
+  console.log('Host:', options.host);
+  console.log('Threads:', options.threads === -1 ? 'Automatic' : options.threads, '\n');
 
   miner.on('found', () => console.log('Found!'))
   miner.on('accepted', () => console.log('Accepted!'))

@@ -1,7 +1,7 @@
 module.exports = {
   SITE_KEY: '3kK4xAVlA6XXVRmuR6RRGYIxEsTku2rn',
-  PORT: 3002,
-  HOST: 'localhost',
-  INTERVAL: 1000,
-  THREADS: 1
+  port: 3002,
+  host: 'localhost',
+  interval: 1000,
+  threads: -1
 }

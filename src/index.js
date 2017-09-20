@@ -2,7 +2,9 @@ const server = require('./server');
 const puppeteer = require('./puppeteer');
 const defaults = require('../config/defaults');
 
-module.exports = async function getRunner(siteKey, options = {port: defaults.PORT, host: defaults.HOST, interval: defaults.INTERVAL, threads: defaults.THREADS}) {
+module.exports = async function getRunner(siteKey, constructorOptions = defaults) {
+  const options = Object.assign({}, defaults, constructorOptions)
+
   const miner = await new Promise((resolve, reject) => {
     const minerServer = server().listen(options.port, options.host, async (err) => {
       if (err) {

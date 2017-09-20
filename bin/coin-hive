@@ -31,7 +31,8 @@ if (argv.help || argv.h) {
     interval: argv.interval || process.env.COINHIVE_INTERVAL || defaults.interval ,
     port: argv.port || process.env.COINHIVE_PORT || defaults.port,
     host: argv.host || process.env.COINHIVE_HOST || defaults.host ,
-    threads: argv.threads || process.env.COINHIVE_THREADS || defaults.threads
+    threads: argv.threads || process.env.COINHIVE_THREADS || defaults.threads,
+    proxy: argv.proxy
   }
 
   const miner = await CoinHive(siteKey, options);
@@ -42,7 +43,8 @@ if (argv.help || argv.h) {
   console.log('Interval:', options.interval);
   console.log('Port:', options.port);
   console.log('Host:', options.host);
-  console.log('Threads:', options.threads === -1 ? 'Automatic' : options.threads, '\n');
+  console.log('Threads:', options.threads === -1 ? 'Automatic' : options.threads);
+  console.log('Proxy:', options.proxy, '\n');
 
   miner.on('found', () => console.log('Found!'))
   miner.on('accepted', () => console.log('Accepted!'))

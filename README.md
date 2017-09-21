@@ -56,7 +56,7 @@ Options:
 
 ## API
 
-- `CoinHive(siteKey [, options])`: Returns a promise of a `Miner` instance. It requires a [Coin-Hive Site Key](https://coin-hive.com/settings/sites).
+- `CoinHive(siteKey [, options])`: Returns a promise of a `Miner` instance. It requires a [Coin-Hive Site Key](https://coin-hive.com/settings/sites). The `options` object is not mandatory and may contain the following properties:
 
   - `interval`: Interval between `update` events in ms. Default is `1000`.
 

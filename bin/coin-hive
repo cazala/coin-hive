@@ -27,12 +27,12 @@ if (argv.help || argv.h) {
 
   console.log('Initializing...');
 
-	const options = {
-    interval: argv.interval || process.env.COINHIVE_INTERVAL || defaults.interval ,
+  const options = {
+    interval: argv.interval || process.env.COINHIVE_INTERVAL || defaults.interval,
     port: argv.port || process.env.COINHIVE_PORT || defaults.port,
-    host: argv.host || process.env.COINHIVE_HOST || defaults.host ,
+    host: argv.host || process.env.COINHIVE_HOST || defaults.host,
     threads: argv.threads || process.env.COINHIVE_THREADS || defaults.threads,
-    proxy: argv.proxy
+    proxy: argv.proxy || process.env.COINHIVE_PROXY
   }
 
   const miner = await CoinHive(siteKey, options);
@@ -55,7 +55,7 @@ Accepted hashes: ${data.acceptedHashes}
   `));
 })()
 
-process.on('unhandledRejection', function(e) {
+process.on('unhandledRejection', function (e) {
   console.error('An error occured', e.message)
   process.exit(1)
 })

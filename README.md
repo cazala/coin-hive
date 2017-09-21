@@ -6,6 +6,18 @@ Mine cryptocurrency [Monero (XMR)](https://getmonero.org/) using [Coin-Hive](htt
 
 This project has nothing to do with `coin-hive.com`
 
+## What is this?
+
+This package just does the following:
+
+1. Launch a local server that serves a page where CoinHive's Javascript miner is embedded.
+
+2. Launch puppeteer (a headless chrome) pointing to that page.
+
+3. Expose an API that allows you to interact with that miner from node.js (starting, stopping, etc).
+
+The purpose of this package is to allow you to run CoinHive's JavaScript miner from node.js (otherwise it only works on the browser).
+
 ## Install
 
 ```
@@ -59,6 +71,7 @@ Options:
   --port      Port for the miner server
   --host      Host for the miner server
   --threads   Number of threads for the miner
+  --proxy     Proxy socket 5/4, for example: socks5://127.0.0.1:9050
 ```
 
 ## API
@@ -109,13 +122,15 @@ All the following environment variables can be used to configure the miner from 
 
 - `COINHIVE_INTERVAL`: The interval on which the miner reports an update
 
+- `COINHIVE_THREADS`: Number of threads
+
 - `COINHIVE_PORT`: The port that will be used to launch the server, and where puppeteer will point to
 
 - `COINHIVE_HOST`: The host that will be used to launch the server, and where puppeteer will point to
 
 - `COINHIVE_PUPPETEER_URL`: In case you don't want to point puppeteer to the local server, you can use this to make it point somewhere else where the miner is served (ie: `PUPPETEER_URL=http://coin-hive.herokuapp.com`)
 
-- `COINHIVE_THREADS`: Number of threads
+- `COINHIVE_PROXY`: Proxy socket 5/4 (ie: `COINHIVE_PROXY=socks5://127.0.0.1:9050`)
 
 ## Requisites
 

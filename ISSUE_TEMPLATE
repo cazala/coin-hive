@@ -1,11 +1,21 @@
-READ THIS BEFORE SUBMITTING AN ISSUE!
+Please read this before submitting:
 
-Before you submit an issue, take into account that this project has NOTHING to do with coin-hive.com
+This project has nothing to do with `coin-hive.com`
 
-This is just an npm package that launches a headless chromium and runs coin-hive.com javascript miner in it, so you can use it from node.js (otherwise it only works on the browser).
+What this package does is just the following:
 
-So if you have an issue with the javascript miner itself, or with coin-hive.com website, you should read their FAQs and contact them here:
+1. Launch a local server that serves a page where CoinHive's Javascript miner is embedded.
+
+2. Launch puppeteer (a headless chrome) pointing to that page.
+
+3. Expose an API that allows you to interact with that miner from node.js (starting, stopping, etc).
+
+The purpose of this package is to allow you to run CoinHive's JavaScript miner from node.js (otherwise it only works on the browser).
+
+If you have an issue with CoinHive's JavaScript miner, or with coin-hive.com website, you should read their FAQs and contact them here:
 
 https://coin-hive.com/contact
 
-Thanks for reading ^.^ if you DO have an issue with this package (found a bug, feature request) then PLEASE DO submit it :D
+Thanks for reading ^.^ if you do have an issue with this package (have a question, found a bug, feature request) then please do submit it 
+
+<3

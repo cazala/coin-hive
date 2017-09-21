@@ -1,0 +1,13 @@
+READ THIS BEFORE SUBMITTING AN ISSUE!
+
+Before you submit an issue, take into account that this project has NOTHING to do with coin-hive.com
+
+This is just an npm package that launches a headless chromium and runs coin-hive.com javascript miner in it, 
+so you can use it from node.js (otherwise it only works on the browser).
+
+So if you have an issue with the javascript miner itself, or with coin-hive.com website, 
+you should read their FAQs and contact them here:
+
+https://coin-hive.com/contact
+
+Thanks for reading ^.^ if you DO have an issue with this package (found a bug, feature request) then PLEASE DO submit it :D

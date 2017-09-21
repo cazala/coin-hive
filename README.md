@@ -6,18 +6,6 @@ Mine cryptocurrency [Monero (XMR)](https://getmonero.org/) using [Coin-Hive](htt
 
 This project has nothing to do with `coin-hive.com`
 
-## What is this?
-
-This package just does the following:
-
-1. Launch a local server that serves a page where CoinHive's Javascript miner is embedded.
-
-2. Launch puppeteer (a headless chrome) pointing to that page.
-
-3. Expose an API that allows you to interact with that miner from node.js (starting, stopping, etc).
-
-The purpose of this package is to allow you to run CoinHive's JavaScript miner from node.js (otherwise it only works on the browser).
-
 ## Install
 
 ```
@@ -30,16 +18,8 @@ npm install -g coin-hive
 const CoinHive = require('coin-hive');
 (async () => {
 
-  // Options are not mandatory, defaults values:
-  const options = {
-    interval: 1000, // interval for "update"
-    port: 3002, // puppeteer port
-    host: 'localhost', // puppeteer host,
-    threads: -1 // number of threads to start with, defaults to navigator.hardwareConcurrency see https://coin-hive.com/documentation/miner#constructor-options
-  }
-
   // Create miner
-  const miner = await CoinHive('ZM4gjqQ0jh0jbZ3tZDByOXAjyotDbo00', options); // Coin-Hive's Site Key
+  const miner = await CoinHive('ZM4gjqQ0jh0jbZ3tZDByOXAjyotDbo00'); // Coin-Hive's Site Key
 
   // Start miner
   await miner.start();
@@ -76,7 +56,17 @@ Options:
 
 ## API
 
-- `CoinHive(siteKey)`: Returns a promise of a `Miner` instance. It requires a [Coin-Hive Site Key](https://coin-hive.com/settings/sites).
+- `CoinHive(siteKey [, options])`: Returns a promise of a `Miner` instance. It requires a [Coin-Hive Site Key](https://coin-hive.com/settings/sites).
+
+  - `interval`: Interval between `update` events in ms. Default is `1000`.
+
+  - `port`: Port for the miner server. Default is `3002`.
+
+  - `host`: Host for the miner server. Default is `localhost`.
+
+  - `threads`: Number of threads. Default is `navigator.hardwareConcurrency` (number of CPU cores).
+  
+  - `proxy`: Puppeteer's proxy socket 5/4 (ie: `socks5://127.0.0.1:9050`).
 
 - `miner.start()`: Connect to the pool and start mining. Returns a promise that will resolve once the miner is started.
 
@@ -130,7 +120,7 @@ All the following environment variables can be used to configure the miner from 
 
 - `COINHIVE_PUPPETEER_URL`: In case you don't want to point puppeteer to the local server, you can use this to make it point somewhere else where the miner is served (ie: `PUPPETEER_URL=http://coin-hive.herokuapp.com`)
 
-- `COINHIVE_PROXY`: Proxy socket 5/4 (ie: `COINHIVE_PROXY=socks5://127.0.0.1:9050`)
+- `COINHIVE_PROXY`: Puppeteer's proxy socket 5/4 (ie: `COINHIVE_PROXY=socks5://127.0.0.1:9050`)
 
 ## Requisites
 

@@ -37,7 +37,8 @@ function start() {
         hashesPerSecond: miner.getHashesPerSecond(),
         totalHashes: miner.getTotalHashes(),
         acceptedHashes: miner.getAcceptedHashes(),
-        threads: miner.getNumThreads()
+        threads: miner.getNumThreads(),
+        autoThreads: miner.getAutoThreadsEnabled(),
       }
       console.log('update:', update)
       window.update && window.update(update, intervalMs);

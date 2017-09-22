@@ -3,6 +3,10 @@
 const CoinHive = require('../src');
 const argv = require('minimist')(process.argv.slice(2));
 const defaults = require('../config/defaults');
+const logUpdate = require('log-update');
+const Table = require('tty-table');
+const spinner = require('elegant-spinner')();
+const readline = require('readline');
 
 function help() {
   const text = require('fs').createReadStream(`${__dirname}/help`)
@@ -25,7 +29,7 @@ if (argv.help || argv.h) {
     return;
   }
 
-  console.log('Initializing...');
+  logUpdate('Initializing...');
 
   const options = {
     interval: argv.interval || process.env.COINHIVE_INTERVAL || defaults.interval,
@@ -38,24 +42,93 @@ if (argv.help || argv.h) {
   const miner = await CoinHive(siteKey, options);
   await miner.start();
 
-  console.log('Initialized!\n');
-  console.log('Site Key:', options.siteKey);
-  console.log('Interval:', options.interval);
-  console.log('Port:', options.port);
-  console.log('Host:', options.host);
-  console.log('Threads:', options.threads === -1 ? 'Automatic' : options.threads);
-  console.log('Proxy:', options.proxy, '\n');
+  const log = logger(siteKey, options);
 
-  miner.on('found', () => console.log('Found!'))
-  miner.on('accepted', () => console.log('Accepted!'))
-  miner.on('update', (data) => console.log(`
-Hashes per second: ${data.hashesPerSecond}
-Total hashes: ${data.totalHashes}
-Accepted hashes: ${data.acceptedHashes}
-  `));
-})()
+  miner.on('update', (data) => {
+    data.running = true
+    logUpdate(log(data))
+  });
+
+  if (!process.stdout.isTTY) {
+    return
+  }
+
+  process.stdin.on('keypress', async (str, key) => {
+    let threads = await miner.rpc('getNumThreads')
+    const running = await miner.rpc('isRunning')
+    const auto = await miner.rpc('getAutoThreadsEnabled')
+
+    if (str === '+') {
+      await miner.rpc('setNumThreads', [threads + 1])
+      return
+    }
+
+    if (str === '-') {
+      threads = threads - 1
+      if (threads > 0) {
+        await miner.rpc('setNumThreads', [threads])
+      }
+      return
+    }
+
+    if (str === 'a') {
+      await miner.rpc('setAutoThreadsEnabled', [!auto])
+      return
+    }
+
+    if (str === 's') {
+      if (running === true) {
+        await miner.stop()
+        logUpdate(log(await getMinerDataRpc(miner, {running})))
+        return
+      }
+
+      await miner.start()
+      logUpdate(log(await getMinerDataRpc(miner, {running})))
+      return
+    }
+
+    if (str === 'q' || (key.name === 'c' && key.ctrl)) {
+      process.exit(2)
+    }
+  })
+})();
+
+let previousData;
+
+function logger(siteKey, options) {
+  return function log(data) {
+    let t = Table([
+      {value: 'Hashes/s'},
+      {value: 'Total'},
+      {value: 'Accepted'}
+    ], [
+      [data.hashesPerSecond.toFixed(1), data.totalHashes, data.acceptedHashes]
+    ]);
+
+    return `
+Site key: ${siteKey}
+${t.render()}
+
+${data.running ? spinner() : 'Stopped'} | Listening on ${options.host}:${options.port}${options.proxy ? ` | Proxy: ${options.proxy}` : ''} | ${data.threads || 0} Threads${data.autoThreads ? ' (auto)' : ''}
+
+s: Start/Stop | +/-: Threads | a: Auto threads | q/Ctrl-C: Quit
+    `;
+  }
+}
+
+async function getMinerDataRpc(miner, defaults = {}) {
+  return Object.assign({
+    hashesPerSecond: await miner.rpc('getHashesPerSecond'),
+    totalHashes: await miner.rpc('getTotalHashes'),
+    acceptedHashes: await miner.rpc('getAcceptedHashes')
+  }, defaults)
+}
 
 process.on('unhandledRejection', function (e) {
-  console.error('An error occured', e.message)
-  process.exit(1)
+  console.error('An error occured', e.message);
+  process.exit(1);
 })
+
+readline.emitKeypressEvents(process.stdin);
+process.stdin.setRawMode(true);

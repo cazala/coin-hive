@@ -4,7 +4,7 @@ Mine cryptocurrency [Monero (XMR)](https://getmonero.org/) using [Coin-Hive](htt
 
 ## Disclaimer
 
-This project has nothing to do with `coin-hive.com`
+This project is not endorsed by or affiliated with `coin-hive.com` in any way.
 
 ## Install
 
@@ -16,6 +16,7 @@ npm install -g coin-hive
 
 ```js
 const CoinHive = require('coin-hive');
+
 (async () => {
 
   // Create miner
@@ -56,7 +57,7 @@ Options:
 
 ## API
 
-- `CoinHive(siteKey [, options])`: Returns a promise of a `Miner` instance. It requires a [Coin-Hive Site Key](https://coin-hive.com/settings/sites). The `options` object is not mandatory and may contain the following properties:
+- `CoinHive(siteKey[, options])`: Returns a promise of a `Miner` instance. It requires a [Coin-Hive Site Key](https://coin-hive.com/settings/sites). The `options` object is optional and may contain the following properties:
 
   - `interval`: Interval between `update` events in ms. Default is `1000`.
 
@@ -104,7 +105,7 @@ await miner.rpc('setThrottle', [0.5]);
 await miner.rpc('getThrottle'); // 0.5
 ```
 
-## ENVIRONMENT VARIABLES
+## Environment Variables
 
 All the following environment variables can be used to configure the miner from the outside:
 

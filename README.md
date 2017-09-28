@@ -4,7 +4,7 @@ Mine cryptocurrency [Monero (XMR)](https://getmonero.org/) using [Coin-Hive](htt
 
 ## Disclaimer
 
-This project is not endorsed by or affiliated with `coin-hive.com` in any way.
+This project is not endorsed by or affiliated with `coinhive.com` in any way.
 
 ## Install
 
@@ -119,7 +119,7 @@ All the following environment variables can be used to configure the miner from 
 
 - `COINHIVE_HOST`: The host that will be used to launch the server, and where puppeteer will point to
 
-- `COINHIVE_PUPPETEER_URL`: In case you don't want to point puppeteer to the local server, you can use this to make it point somewhere else where the miner is served (ie: `PUPPETEER_URL=http://coin-hive.herokuapp.com`)
+- `COINHIVE_PUPPETEER_URL`: In case you don't want to point puppeteer to the local server, you can use this to make it point somewhere else where the miner is served (ie: `COINHIVE_PUPPETEER_URL=http://coin-hive.herokuapp.com`)
 
 - `COINHIVE_PROXY`: Puppeteer's proxy socket 5/4 (ie: `COINHIVE_PROXY=socks5://127.0.0.1:9050`)
 

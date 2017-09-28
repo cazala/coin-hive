@@ -46,9 +46,9 @@ const CoinHive = require('coin-hive');
 ```
 
 ## Username 
-To set a Username to the Coin-Hive miner add a secound paramater. 
+To set the Coin-Hive miner Username update the paramater after siteKey -  
 ```js
-const miner = await CoinHive('7NYWVFNVO2xf9N4B3dlVa81yolVon4Qk', 'server');
+const miner = await CoinHive(siteKey, userName);
 ```
 
 ## CLI

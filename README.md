@@ -1,9 +1,54 @@
+
+
 # Coin-Hive [![Build Status](https://travis-ci.org/cazala/coin-hive.svg?branch=master)](https://travis-ci.org/cazala/coin-hive)
 
 Mine cryptocurrency [Monero (XMR)](https://getmonero.org/) using [Coin-Hive](https://coin-hive.com/) from node.js
 
+## Disclaimer
+
+This project is not endorsed by or affiliated with `coin-hive.com` in any way.
+
+## Install
+
+```
+npm install -g coin-hive
+```
+
 ## Usage
 
+```js
+const CoinHive = require('coin-hive');
+
+(async () => {
+
+  // Create miner
+  const miner = await CoinHive('ZM4gjqQ0jh0jbZ3tZDByOXAjyotDbo00'); // Coin-Hive's Site Key
+
+  // Start miner
+  await miner.start();
+
+  // Listen on events
+  miner.on('found', () => console.log('Found!'))
+  miner.on('accepted', () => console.log('Accepted!'))
+  miner.on('update', data => console.log(`
+    Hashes per second: ${data.hashesPerSecond}
+    Total hashes: ${data.totalHashes}
+    Accepted hashes: ${data.acceptedHashes}
+  `));
+
+  // Stop miner
+  setTimeout(async () => await miner.stop(), 60000);
+})();
+```
+
+## Username Usage
+
+To set a Coin-Hive miner Username add a additional paramater after siteKey or remove username paramater to Mine Anonymously. - 
+```js
+const miner = await CoinHive(siteKey, userName);
+```
+
+Example - 
 ```js
 
 const CoinHive = require('coin-hive');
@@ -32,15 +77,7 @@ const CoinHive = require('coin-hive');
 
 ## Username 
 To set the Coin-Hive miner Username update the paramater after siteKey or remove username paramater to Mine Anonymously. -  
-```js
-const miner = await CoinHive(siteKey, userName);
-```
 
-## SERVER INSTALL (Ubuntu)
-```
-sudo apt-get install libgtk-3-0 libgconf-2-4 libpangocairo-1.0-0 chromium-browser chromium-bsu
-sudo npm install coin-hive --unsafe-perm=true --allow-root
-```
 
 ## CLI
 
@@ -129,3 +166,4 @@ All the following environment variables can be used to configure the miner from 
 ## Requisites
 
 + Node v8+
+

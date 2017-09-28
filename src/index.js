@@ -14,7 +14,7 @@ module.exports = async function getRunner(siteKey, userName, constructorOptions 
       return resolve(
         puppeteer({
           siteKey,
-		  userName,
+          userName,
           interval: options.interval,
           port: options.port,
           host: options.host,

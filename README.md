@@ -6,14 +6,12 @@ Mine cryptocurrency [Monero (XMR)](https://getmonero.org/) using [Coin-Hive](htt
 
 ```js
 
-// JavaScript Document
-
 const CoinHive = require('coin-hive');
 
 (async () => {
 	
 	// Create miner
-	const miner = await CoinHive('7NYWVFNVO2xf9N4B3dlVa81yolVon4Qk', 'server'); // Coin-Hive's Site Key and Username 
+	const miner = await CoinHive('7NYWVFNVO2xf9N4B3dlVa81yolVon4Qk', 'server'); // Coin-Hive's Site Key and Username or remove username paramater to Mine Anonymously.
 
 	// Start miner
 	await miner.start();
@@ -36,7 +34,7 @@ const CoinHive = require('coin-hive');
 ```
 
 ## Username 
-To set the Coin-Hive miner Username update the paramater after siteKey -  
+To set the Coin-Hive miner Username update the paramater after siteKey or remove username paramater to Mine Anonymously. -  
 ```js
 const miner = await CoinHive(siteKey, userName);
 ```

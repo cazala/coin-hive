@@ -22,8 +22,6 @@ const CoinHive = require('coin-hive');
 
 (async () => {
 	
-	//CoinHive.User(siteKey, userName [, options])
-	
 	// Create miner
 	const miner = await CoinHive('7NYWVFNVO2xf9N4B3dlVa81yolVon4Qk', 'server'); // Coin-Hive's Site Key and Username 
 
@@ -45,6 +43,12 @@ const CoinHive = require('coin-hive');
 	// Stop miner
 	//setTimeout(async () => await miner.stop(), 60000);
 })();
+```
+
+## Username 
+To set a Username to the Coin-Hive miner add a secound paramater. 
+```js
+const miner = await CoinHive('7NYWVFNVO2xf9N4B3dlVa81yolVon4Qk', 'server');
 ```
 
 ## CLI

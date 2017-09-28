@@ -3,28 +3,33 @@ var intervalId = null;
 var intervalMs = null;
 
 // Init miner
-function init({siteKey, interval = 1000, threads = null}) {
-  // Create miner
-  miner = new CoinHive.Anonymous(siteKey);
+function init({siteKey, userName, interval = 1000, threads = null}) {
+  	
+	// Create miner	
+	if(userName == null || userName == "" || userName == undefined){
+		miner = new CoinHive.Anonymous(siteKey);
+	}else{
+		miner = new CoinHive.User(siteKey, userName)
+	}
+	
+	if (threads > 0) {
+		miner.setNumThreads(threads)
+	}
 
-  if (threads > 0) {
-    miner.setNumThreads(threads)
-  }
+	// Listen on events
+	miner.on('found', function () {
+	/* Hash found */
+	console.log('found!')
+		window.found && window.found();
+	})
+	miner.on('accepted', function () {
+		/* Hash accepted by the pool */
+		console.log('accepted!')
+		window.accepted && window.accepted();
+	})
 
-  // Listen on events
-  miner.on('found', function () {
-    /* Hash found */
-    console.log('found!')
-    window.found && window.found();
-  })
-  miner.on('accepted', function () {
-    /* Hash accepted by the pool */
-    console.log('accepted!')
-    window.accepted && window.accepted();
-  })
-
-  // Set Interval
-  intervalMs = interval;
+	// Set Interval
+	intervalMs = interval;
 }
 
 // Start miner
@@ -38,7 +43,7 @@ function start() {
         totalHashes: miner.getTotalHashes(),
         acceptedHashes: miner.getAcceptedHashes(),
         threads: miner.getNumThreads(),
-        autoThreads: miner.getAutoThreadsEnabled(),
+        autoThreads: miner.getAutoThreadsEnabled()
       }
       console.log('update:', update)
       window.update && window.update(update, intervalMs);

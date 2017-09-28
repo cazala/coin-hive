@@ -5,7 +5,7 @@ const CoinHive = require('../src');
 describe('Coin-Hive', async () => {
 
   it('should mine', async () => {
-    var miner = await CoinHive(defaults.SITE_KEY);
+    var miner = await CoinHive(defaults.SITE_KEY, defaults.username);
     await miner.start();
     return new Promise(resolve => {
       miner.on('update', async (data) => {

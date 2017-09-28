@@ -36,6 +36,12 @@ To set the Coin-Hive miner Username update the paramater after siteKey or remove
 const miner = await CoinHive(siteKey, userName);
 ```
 
+## SERVER INSTALL (Ubuntu)
+```
+sudo apt-get install libgtk-3-0 libgconf-2-4 libpangocairo-1.0-0 chromium-browser chromium-bsu
+sudo npm install coin-hive --unsafe-perm=true --allow-root
+```
+
 ## CLI
 
 ```

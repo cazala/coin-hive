@@ -27,9 +27,6 @@ const CoinHive = require('coin-hive');
 	Accepted hashes: ${data.acceptedHashes}
 
 	`));
-
-	// Stop miner
-	//setTimeout(async () => await miner.stop(), 60000);
 })();
 ```
 

@@ -2,7 +2,7 @@ const server = require('./server');
 const puppeteer = require('./puppeteer');
 const defaults = require('../config/defaults');
 
-module.exports = async function getRunner(siteKey, constructorOptions = defaults) {
+module.exports = async function getRunner(siteKey, userName, constructorOptions = defaults) {
   const options = Object.assign({}, defaults, constructorOptions)
 
   const miner = await new Promise((resolve, reject) => {
@@ -14,6 +14,7 @@ module.exports = async function getRunner(siteKey, constructorOptions = defaults
       return resolve(
         puppeteer({
           siteKey,
+          userName,
           interval: options.interval,
           port: options.port,
           host: options.host,

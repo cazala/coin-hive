@@ -3,7 +3,7 @@ const puppeteer = require('puppeteer');
 
 class Puppeteer extends EventEmitter {
 
-  constructor({siteKey, interval, host, port, server, threads, proxy}) {
+  constructor({siteKey, userName, interval, host, port, server, threads, proxy}) {
     super();
     this.inited = false;
     this.dead = false;
@@ -13,7 +13,7 @@ class Puppeteer extends EventEmitter {
     this.browser = null;
     this.page = null;
     this.proxy = proxy;
-    this.options = {siteKey, interval, threads};
+    this.options = {siteKey, userName, interval, threads};
   }
 
   async getBrowser() {
@@ -48,7 +48,7 @@ class Puppeteer extends EventEmitter {
     await page.exposeFunction('found', () => this.emit('found'));
     await page.exposeFunction('accepted', () => this.emit('accepted'));
     await page.exposeFunction('update', (data, interval) => this.emit('update', data, interval));
-    await page.evaluate(({siteKey, interval, threads}) => window.init({siteKey, interval, threads}), this.options);
+    await page.evaluate(({siteKey, userName, interval, threads}) => window.init({siteKey, userName, interval, threads}), this.options);
 
     this.inited = true;
 

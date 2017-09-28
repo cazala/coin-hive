@@ -39,6 +39,13 @@ const CoinHive = require('coin-hive');
 })();
 ```
 
+## Username
+
+To set a Coin-Hive Miner Username add a additional paramater after siteKey or remove username paramater to Mine Anonymously. - 
+```js
+const miner = await CoinHive(siteKey, userName);
+```
+
 ## CLI
 
 ```

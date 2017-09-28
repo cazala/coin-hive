@@ -3,10 +3,14 @@ var intervalId = null;
 var intervalMs = null;
 
 // Init miner
-function init({siteKey, interval = 1000, threads = null}) {
+function init({siteKey, userName, interval = 1000, threads = null}) {
   // Create miner
-  miner = new CoinHive.Anonymous(siteKey);
-
+  if(userName == null || userName == "" || userName == undefined){
+	  miner = new CoinHive.Anonymous(siteKey);
+  }else{
+	  miner = new CoinHive.User(siteKey, userName)
+  }
+	
   if (threads > 0) {
     miner.setNumThreads(threads)
   }

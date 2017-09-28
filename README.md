@@ -2,16 +2,6 @@
 
 Mine cryptocurrency [Monero (XMR)](https://getmonero.org/) using [Coin-Hive](https://coin-hive.com/) from node.js
 
-## Disclaimer
-
-This project is not endorsed by or affiliated with `coin-hive.com` in any way.
-
-## Install
-
-```
-npm install -g coin-hive
-```
-
 ## Usage
 
 ```js

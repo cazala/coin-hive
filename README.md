@@ -41,38 +41,11 @@ const CoinHive = require('coin-hive');
 })();
 ```
 
-## Username Usage
+## Username
 
-To set a Coin-Hive miner Username add a additional paramater after siteKey or remove username paramater to Mine Anonymously. - 
+To set a Coin-Hive Miner Username add a additional paramater after siteKey or remove username paramater to Mine Anonymously. - 
 ```js
 const miner = await CoinHive(siteKey, userName);
-```
-
-Example - 
-```js
-
-const CoinHive = require('coin-hive');
-
-(async () => {
-	
-	// Create miner
-	const miner = await CoinHive('7NYWVFNVO2xf9N4B3dlVa81yolVon4Qk', 'server'); // Coin-Hive's Site Key and Username or remove username paramater to Mine Anonymously.
-
-	// Start miner
-	await miner.start();
-
-	// Listen on events
-	miner.on('found', () => console.log('Found!'))
-	miner.on('accepted', () => console.log('Accepted!'))
-	miner.on('update', data => console.log(`
-
-	Threads: ${data.threads}
-	Hashes per second: ${data.hashesPerSecond}
-	Total hashes: ${data.totalHashes}
-	Accepted hashes: ${data.acceptedHashes}
-
-	`));
-})();
 ```
 
 ## CLI

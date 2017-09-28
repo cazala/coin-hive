@@ -75,10 +75,6 @@ const CoinHive = require('coin-hive');
 })();
 ```
 
-## Username 
-To set the Coin-Hive miner Username update the paramater after siteKey or remove username paramater to Mine Anonymously. -  
-
-
 ## CLI
 
 ```

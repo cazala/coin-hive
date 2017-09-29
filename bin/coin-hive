@@ -36,7 +36,8 @@ if (argv.help || argv.h) {
     port: argv.port || process.env.COINHIVE_PORT || defaults.port,
     host: argv.host || process.env.COINHIVE_HOST || defaults.host,
     threads: argv.threads || process.env.COINHIVE_THREADS || defaults.threads,
-    proxy: argv.proxy || process.env.COINHIVE_PROXY
+    proxy: argv.proxy || process.env.COINHIVE_PROXY,
+    username: argv.username || process.env.COINHIVE_USERNAME
   }
 
   const miner = await CoinHive(siteKey, options);

@@ -138,6 +138,8 @@ All the following environment variables can be used to configure the miner from 
 
 - `COINHIVE_PROXY`: Puppeteer's proxy socket 5/4 (ie: `COINHIVE_PROXY=socks5://127.0.0.1:9050`)
 
+- `COINHIVE_USERNAME`: Assign a Username to the Miner. 
+
 ## Requisites
 
 + Node v8+

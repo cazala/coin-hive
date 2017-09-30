@@ -39,6 +39,21 @@ const CoinHive = require('coin-hive');
 })();
 ```
 
+## Username 
+
+To set a miner "Username" Add username paramater to the config/defaults.js for example: 
+
+```
+module.exports = {
+  SITE_KEY: '3kK4xAVlA6XXVRmuR6RRGYIxEsTku2rn',
+  port: 3002,
+  host: 'localhost',
+  interval: 1000,
+  threads: -1,
+  username: "Username"
+}
+```
+
 ## CLI
 
 ```
@@ -122,6 +137,8 @@ All the following environment variables can be used to configure the miner from 
 - `COINHIVE_PUPPETEER_URL`: In case you don't want to point puppeteer to the local server, you can use this to make it point somewhere else where the miner is served (ie: `COINHIVE_PUPPETEER_URL=http://coin-hive.herokuapp.com`)
 
 - `COINHIVE_PROXY`: Puppeteer's proxy socket 5/4 (ie: `COINHIVE_PROXY=socks5://127.0.0.1:9050`)
+
+- `COINHIVE_USERNAME`: Assign a Username to the Miner. 
 
 ## Requisites
 

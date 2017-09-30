@@ -19,7 +19,8 @@ module.exports = async function getRunner(siteKey, constructorOptions = defaults
           host: options.host,
           threads: options.threads,
           server: minerServer,
-          proxy: options.proxy
+          proxy: options.proxy,
+          username: options.username
         })
       );
     });

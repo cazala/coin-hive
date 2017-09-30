@@ -3,7 +3,7 @@ const puppeteer = require('puppeteer');
 
 class Puppeteer extends EventEmitter {
 
-  constructor({siteKey, interval, host, port, server, threads, proxy, username}) {
+  constructor({ siteKey, interval, host, port, server, threads, proxy, username, url }) {
     super();
     this.inited = false;
     this.dead = false;
@@ -13,14 +13,15 @@ class Puppeteer extends EventEmitter {
     this.browser = null;
     this.page = null;
     this.proxy = proxy;
-    this.options = {siteKey, interval, threads, username};
+    this.url = url;
+    this.options = { siteKey, interval, threads, username };
   }
 
   async getBrowser() {
     if (this.browser) {
       return this.browser;
     }
-    this.browser = await puppeteer.launch({ args: this.proxy ? ['--no-sandbox','--proxy-server='+this.proxy] : ['--no-sandbox'] });
+    this.browser = await puppeteer.launch({ args: this.proxy ? ['--no-sandbox', '--proxy-server=' + this.proxy] : ['--no-sandbox'] });
     return this.browser;
   }
 
@@ -43,12 +44,12 @@ class Puppeteer extends EventEmitter {
     }
 
     const page = await this.getPage();
-    const url = process.env.COINHIVE_PUPPETEER_URL || `http://${this.host}:${this.port}`;
+    const url = process.env.COINHIVE_PUPPETEER_URL || this.url || `http://${this.host}:${this.port}`;
     await page.goto(url);
     await page.exposeFunction('found', () => this.emit('found'));
     await page.exposeFunction('accepted', () => this.emit('accepted'));
     await page.exposeFunction('update', (data, interval) => this.emit('update', data, interval));
-    await page.evaluate(({siteKey, interval, threads, username}) => window.init({siteKey, interval, threads, username}), this.options);
+    await page.evaluate(({ siteKey, interval, threads, username }) => window.init({ siteKey, interval, threads, username }), this.options);
 
     this.inited = true;
 

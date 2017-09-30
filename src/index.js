@@ -6,7 +6,7 @@ module.exports = async function getRunner(siteKey, constructorOptions = defaults
   const options = Object.assign({}, defaults, constructorOptions)
 
   const miner = await new Promise((resolve, reject) => {
-    const minerServer = server().listen(options.port, options.host, async (err) => {
+    const minerServer = server(options.minerUrl).listen(options.port, options.host, async (err) => {
       if (err) {
         return reject(err);
       }
@@ -20,7 +20,8 @@ module.exports = async function getRunner(siteKey, constructorOptions = defaults
           threads: options.threads,
           server: minerServer,
           proxy: options.proxy,
-          username: options.username
+          username: options.username,
+          url: options.puppeteerUrl
         })
       );
     });

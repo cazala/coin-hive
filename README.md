@@ -48,12 +48,14 @@ Usage: coin-hive <site-key>
 
 Options:
 
-  --username  Set a username for the miner
-  --interval  Interval between updates (logs)
-  --port      Port for the miner server
-  --host      Host for the miner server
-  --threads   Number of threads for the miner
-  --proxy     Proxy socket 5/4, for example: socks5://127.0.0.1:9050
+  --username        Set a username for the miner
+  --interval        Interval between updates (logs)
+  --port            Port for the miner server
+  --host            Host for the miner server
+  --threads         Number of threads for the miner
+  --proxy           Proxy socket 5/4, for example: socks5://127.0.0.1:9050
+  --puppeteer-url   URL where puppeteer will point to, by default is miner server (host:port)
+  --miner-url       URL of CoinHive's JavaScript miner, can be set to use a proxy
 ```
 
 ## API
@@ -114,6 +116,8 @@ All the following environment variables can be used to configure the miner from 
 
 - `COINHIVE_SITE_KEY`: Coin-Hive's Site Key
 
+- `COINHIVE_USERNAME`: Set a username to the miner. See [CoinHive.User](https://coinhive.com/documentation/miner#coinhive-user).
+
 - `COINHIVE_INTERVAL`: The interval on which the miner reports an update
 
 - `COINHIVE_THREADS`: Number of threads
@@ -124,9 +128,9 @@ All the following environment variables can be used to configure the miner from 
 
 - `COINHIVE_PUPPETEER_URL`: In case you don't want to point puppeteer to the local server, you can use this to make it point somewhere else where the miner is served (ie: `COINHIVE_PUPPETEER_URL=http://coin-hive.herokuapp.com`)
 
-- `COINHIVE_PROXY`: Puppeteer's proxy socket 5/4 (ie: `COINHIVE_PROXY=socks5://127.0.0.1:9050`)
+- `COINHIVE_MINER_URL`: Set the CoinHive JavaScript Miner url. By defualt this is `https://coinhive.com/lib/coinhive.min.js`. You can set this to use a [CoinHive Proxy](https://github.com/cazala/coin-hive-proxy).
 
-- `COINHIVE_USERNAME`: Assign a Username to the Miner. 
+- `COINHIVE_PROXY`: Puppeteer's proxy socket 5/4 (ie: `COINHIVE_PROXY=socks5://127.0.0.1:9050`)
 
 ## Requisites
 

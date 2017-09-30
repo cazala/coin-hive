@@ -4,5 +4,7 @@ module.exports = {
   host: 'localhost',
   interval: 1000,
   threads: -1,
-  username: null
+  username: null,
+  minerUrl: 'https://coinhive.com/lib/coinhive.min.js',
+  puppeteerUrl: null
 }

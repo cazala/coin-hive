@@ -36,8 +36,10 @@ if (argv.help || argv.h) {
     port: argv.port || process.env.COINHIVE_PORT || defaults.port,
     host: argv.host || process.env.COINHIVE_HOST || defaults.host,
     threads: argv.threads || process.env.COINHIVE_THREADS || defaults.threads,
-    proxy: argv.proxy || process.env.COINHIVE_PROXY,
-    username: argv.username || process.env.COINHIVE_USERNAME
+    proxy: argv.proxy || process.env.COINHIVE_PROXY || defaults.proxy,
+    username: argv.username || process.env.COINHIVE_USERNAME || defaults.username,
+    puppeteerUrl: argv['puppeteer-url'] || process.env.COINHIVE_PUPPETEER_URL || defaults.puppeteerUrl,
+    minerUrl: argv['miner-url'] || process.env.COINHIVE_MINER_URL || defaults.minerUrl
   }
 
   const miner = await CoinHive(siteKey, options);
@@ -80,12 +82,12 @@ if (argv.help || argv.h) {
     if (str === 's') {
       if (running === true) {
         await miner.stop()
-        logUpdate(log(await getMinerDataRpc(miner, {running})))
+        logUpdate(log(await getMinerDataRpc(miner, { running })))
         return
       }
 
       await miner.start()
-      logUpdate(log(await getMinerDataRpc(miner, {running})))
+      logUpdate(log(await getMinerDataRpc(miner, { running })))
       return
     }
 
@@ -100,12 +102,12 @@ let previousData;
 function logger(siteKey, options) {
   return function log(data) {
     let t = Table([
-      {value: 'Hashes/s'},
-      {value: 'Total'},
-      {value: 'Accepted'}
+      { value: 'Hashes/s' },
+      { value: 'Total' },
+      { value: 'Accepted' }
     ], [
-      [data.hashesPerSecond.toFixed(1), data.totalHashes, data.acceptedHashes]
-    ]);
+        [data.hashesPerSecond.toFixed(1), data.totalHashes, data.acceptedHashes]
+      ]);
 
     return `
 Site key: ${siteKey}

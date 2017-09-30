@@ -3,11 +3,11 @@ var intervalId = null;
 var intervalMs = null;
 
 // Init miner
-function init({siteKey, interval = 1000, threads = null, username}) {
+function init({ siteKey, interval = 1000, threads = null, username }) {
   // Create miner
-  if(!username){
+  if (!username) {
     miner = new CoinHive.Anonymous(siteKey);
-  }else{
+  } else {
     miner = new CoinHive.User(siteKey, username);
   }
 
@@ -15,17 +15,55 @@ function init({siteKey, interval = 1000, threads = null, username}) {
     miner.setNumThreads(threads)
   }
 
-  // Listen on events
-  miner.on('found', function () {
-    /* Hash found */
-    console.log('found!')
-    window.found && window.found();
-  })
-  miner.on('accepted', function () {
-    /* Hash accepted by the pool */
-    console.log('accepted!')
-    window.accepted && window.accepted();
-  })
+  miner.on('open', function (message) {
+    console.log('open', message);
+    if (window.emitMessage) {
+      window.emitMessage('open', message);
+    }
+  });
+
+  miner.on('authed', function (message) {
+    console.log('authed', message);
+    if (window.emitMessage) {
+      window.emitMessage('authed', message);
+    }
+  });
+
+  miner.on('close', function (message) {
+    console.log('close', message);
+    if (window.emitMessage) {
+      window.emitMessage('close', message);
+    }
+  });
+
+  miner.on('error', function (message) {
+    console.log('error', message);
+    if (window.emitMessage) {
+      window.emitMessage('error', message);
+    }
+  });
+
+  miner.on('job', function (message) {
+    console.log('job', message);
+    if (window.emitMessage) {
+      window.emitMessage('job', message);
+    }
+  });
+
+  miner.on('found', function (message) {
+    console.log('found', message);
+    if (window.emitMessage) {
+      window.emitMessage('found', message);
+    }
+  });
+
+  miner.on('accepted', function (message) {
+    console.log('accepted', message);
+    if (window.emitMessage) {
+      window.emitMessage('accepted', message);
+    }
+  });
+
 
   // Set Interval
   intervalMs = interval;

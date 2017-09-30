@@ -29,7 +29,8 @@ class Puppeteer extends EventEmitter {
     if (this.page) {
       return this.page;
     }
-    this.page = await (await this.getBrowser()).newPage();
+    const browser = await this.getBrowser();
+    this.page = await browser.newPage();
     return this.page;
   }
 
@@ -46,8 +47,7 @@ class Puppeteer extends EventEmitter {
     const page = await this.getPage();
     const url = process.env.COINHIVE_PUPPETEER_URL || this.url || `http://${this.host}:${this.port}`;
     await page.goto(url);
-    await page.exposeFunction('found', () => this.emit('found'));
-    await page.exposeFunction('accepted', () => this.emit('accepted'));
+    await page.exposeFunction('emitMessage', (event, message) => this.emit(event, message));
     await page.exposeFunction('update', (data, interval) => this.emit('update', data, interval));
     await page.evaluate(({ siteKey, interval, threads, username }) => window.init({ siteKey, interval, threads, username }), this.options);
 
@@ -67,6 +67,7 @@ class Puppeteer extends EventEmitter {
   }
 
   async kill() {
+    this.on('error', () => { })
     try {
       await this.stop();
     } catch (e) { console.log('Error stopping miner', e) }

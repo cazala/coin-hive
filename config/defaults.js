@@ -3,5 +3,6 @@ module.exports = {
   port: 3002,
   host: 'localhost',
   interval: 1000,
-  threads: -1
+  threads: -1,
+  username: null
 }

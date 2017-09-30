@@ -4,6 +4,7 @@ Usage: 'coin-hive <site-key>'
 
 Options:
 
+  --username  Set a username for the miner
   --interval  Interval between updates (logs)
   --port      Port for the miner server
   --host      Host for the miner server

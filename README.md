@@ -39,30 +39,16 @@ const CoinHive = require('coin-hive');
 })();
 ```
 
-## Username 
-
-To set a miner "Username" Add username paramater to the config/defaults.js for example: 
-
-```
-module.exports = {
-  SITE_KEY: '3kK4xAVlA6XXVRmuR6RRGYIxEsTku2rn',
-  port: 3002,
-  host: 'localhost',
-  interval: 1000,
-  threads: -1,
-  username: "Username"
-}
-```
-
 ## CLI
 
 ```
 Usage: coin-hive <site-key>
 
-<site-key>: You CoinHive Site Key
+<site-key>: Your CoinHive Site Key
 
 Options:
 
+  --username  Set a username for the miner
   --interval  Interval between updates (logs)
   --port      Port for the miner server
   --host      Host for the miner server
@@ -73,6 +59,8 @@ Options:
 ## API
 
 - `CoinHive(siteKey[, options])`: Returns a promise of a `Miner` instance. It requires a [Coin-Hive Site Key](https://coin-hive.com/settings/sites). The `options` object is optional and may contain the following properties:
+
+  - `username`: Set a username for the miner. See [CoinHive.User](https://coinhive.com/documentation/miner#coinhive-user).
 
   - `interval`: Interval between `update` events in ms. Default is `1000`.
 

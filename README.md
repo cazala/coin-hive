@@ -2,6 +2,8 @@
 
 Mine cryptocurrency [Monero (XMR)](https://getmonero.org/) using [CoinHive](https://coinhive.com/) from node.js
 
+**New:** Now you can [run this miner on any stratum based pool](https://github.com/cazala/coin-hive#faq).
+
 ## Disclaimer
 
 This project is not endorsed by or affiliated with `coinhive.com` in any way.
@@ -73,7 +75,7 @@ Options:
   - `host`: Host for the miner server. Default is `localhost`.
 
   - `threads`: Number of threads. Default is `navigator.hardwareConcurrency` (number of CPU cores).
-  
+
   - `proxy`: Puppeteer's proxy socket 5/4 (ie: `socks5://127.0.0.1:9050`).
 
   - `pool`: This allows you to use a different pool. It has to be an [Stratum](https://en.bitcoin.it/wiki/Stratum_mining_protocol) based pool. This object must contain the following properties:
@@ -146,10 +148,6 @@ All the following environment variables can be used to configure the miner from 
 
 ## FAQ
 
-**Which version of Node.js do I need?**
-
-Node v8+
-
 **Can I run this on a different pool than CoinHive's?**
 
 Yes, you can run this on any pool based on the [Stratum Mining Protocol](https://en.bitcoin.it/wiki/Stratum_mining_protocol).
@@ -191,3 +189,7 @@ https://github.com/jontewks/puppeteer-heroku-buildpack
 ```
 
 On the next deploy, your app will also install the dependencies that Puppeteer needs to run.
+
+**Which version of Node.js do I need?**
+
+Node v8+

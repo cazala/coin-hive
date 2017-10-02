@@ -6,5 +6,6 @@ module.exports = {
   threads: -1,
   username: null,
   minerUrl: 'https://coinhive.com/lib/coinhive.min.js',
-  puppeteerUrl: null
+  puppeteerUrl: null,
+  pool: null
 }

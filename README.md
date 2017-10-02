@@ -56,6 +56,8 @@ Options:
   --proxy           Proxy socket 5/4, for example: socks5://127.0.0.1:9050
   --puppeteer-url   URL where puppeteer will point to, by default is miner server (host:port)
   --miner-url       URL of CoinHive's JavaScript miner, can be set to use a proxy
+  --pool-host       A custom stratum pool host, it must be used in combination with --pool-port
+  --pool-port       A custom stratum pool port, it must be used in combination with --pool-host
 ```
 
 ## API
@@ -73,6 +75,12 @@ Options:
   - `threads`: Number of threads. Default is `navigator.hardwareConcurrency` (number of CPU cores).
   
   - `proxy`: Puppeteer's proxy socket 5/4 (ie: `socks5://127.0.0.1:9050`).
+
+  - `pool`: This allows you to use a different pool. It has to be an [Stratum](https://en.bitcoin.it/wiki/Stratum_mining_protocol) based pool. This object must contain the following properties:
+
+      - `host`: The pool's host.
+
+      - `port`: The pool's port.
 
 - `miner.start()`: Connect to the pool and start mining. Returns a promise that will resolve once the miner is started.
 
@@ -132,6 +140,54 @@ All the following environment variables can be used to configure the miner from 
 
 - `COINHIVE_PROXY`: Puppeteer's proxy socket 5/4 (ie: `COINHIVE_PROXY=socks5://127.0.0.1:9050`)
 
-## Requisites
+- `COINHIVE_POOL_HOST`: A custom stratum pool host, it must be used in combination with `COINHIVE_POOL_PORT`.
 
-+ Node v8+
+- `COINHIVE_POOL_PORT`: A custom stratum pool port, it must be used in combination with `COINHIVE_POOL_HOST`.
+
+## FAQ
+
+**Which version of Node.js do I need?**
+
+Node v8+
+
+**Can I run this on a different pool than CoinHive's?**
+
+Yes, you can run this on any pool based on the [Stratum Mining Protocol](https://en.bitcoin.it/wiki/Stratum_mining_protocol).
+
+```js
+const CoinHive = require('./src');
+(async () => {
+  const miner = await CoinHive('ZM4gjqQ0jh0jbZ3tZDByOXAjyotDbo00', {
+    pool: {
+      host: 'xmr-eu1.nanopool.org',
+      port: 14444
+    }
+  });
+  await miner.start();
+  miner.on('found', () => console.log('Found!'))
+  miner.on('accepted', () => console.log('Accepted!'))
+  miner.on('update', data => console.log(`
+    Hashes per second: ${data.hashesPerSecond}
+    Total hashes: ${data.totalHashes}
+    Accepted hashes: ${data.acceptedHashes}
+  `));
+})();
+```
+
+Now your CoinHive miner would be mining on `nanopool.org` XMR pool, using your monero address.
+
+You can also do this using the CLI:
+
+```
+coin-hive ZM4gjqQ0jh0jbZ3tZDByOXAjyotDbo00 --pool-host=xmr-eu1.nanopool.org --pool-port=14444
+```
+
+**Can I run this on Heroku?**
+
+Yes, but since Puppeteer requires some additional dependencies that aren't included on the Linux box that Heroku spins up for you, you need to go to your app's `Settings > Buildpacks`  first and add this url:
+
+```
+https://github.com/jontewks/puppeteer-heroku-buildpack
+```
+
+On the next deploy, your app will also install the dependencies that Puppeteer needs to run.

@@ -19,12 +19,14 @@ if (argv.help || argv.h) {
   return;
 }
 
+let stratumPoolMessage = '';
+
 (async () => {
 
   const siteKey = argv._[0] || process.env.COINHIVE_SITE_KEY;
 
   if (!siteKey) {
-    console.error('No site key found, please set environment "SITE_KEY" or give an argument to the binary');
+    console.error('\nNo site key found, please set environment "COINHIVE_SITE_KEY" or give an argument to the binary\n');
     help();
     return;
   }
@@ -39,7 +41,29 @@ if (argv.help || argv.h) {
     proxy: argv.proxy || process.env.COINHIVE_PROXY || defaults.proxy,
     username: argv.username || process.env.COINHIVE_USERNAME || defaults.username,
     puppeteerUrl: argv['puppeteer-url'] || process.env.COINHIVE_PUPPETEER_URL || defaults.puppeteerUrl,
-    minerUrl: argv['miner-url'] || process.env.COINHIVE_MINER_URL || defaults.minerUrl
+    minerUrl: argv['miner-url'] || process.env.COINHIVE_MINER_URL || defaults.minerUrl,
+    pool: defaults.pool
+  }
+
+  const poolHost = argv['pool-host'] || process.env.COINHIVE_POOL_HOST || null;
+  const poolPort = argv['pool-port'] || process.env.COINHIVE_POOL_PORT || null;
+
+  if (poolHost || poolPort) {
+    if (!poolHost) {
+      console.error('\nNo pool host found, please set environment "COINHIVE_POOL_HOST" or give a --pool-host argument to the binary\n');
+      help();
+      return;
+    }
+    if (!poolPort) {
+      console.error('\nNo pool port found, please set environment "COINHIVE_POOL_PORT" or give a --pool-port argument to the binary\n');
+      help();
+      return;
+    }
+    options.pool = {
+      host: poolHost,
+      port: poolPort
+    }
+    stratumPoolMessage = `\n\nStratum Pool: ${poolHost}:${poolPort}\n`
   }
 
   const miner = await CoinHive(siteKey, options);
@@ -110,7 +134,7 @@ function logger(siteKey, options) {
       ]);
 
     return `
-Site key: ${siteKey}
+Site key: ${siteKey}${stratumPoolMessage}
 ${t.render()}
 
 ${data.running ? spinner() : 'Stopped'} | Listening on ${options.host}:${options.port}${options.proxy ? ` | Proxy: ${options.proxy}` : ''} | ${data.threads || 0} Threads${data.autoThreads ? ' (auto)' : ''}

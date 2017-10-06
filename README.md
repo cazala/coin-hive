@@ -155,7 +155,7 @@ Yes, you can run this on any pool based on the [Stratum Mining Protocol](https:/
 ```js
 const CoinHive = require('./src');
 (async () => {
-  const miner = await CoinHive('ZM4gjqQ0jh0jbZ3tZDByOXAjyotDbo00', {
+  const miner = await CoinHive('<YOUR-MONERO-ADDRESS>', {
     pool: {
       host: 'xmr-eu1.nanopool.org',
       port: 14444
@@ -177,7 +177,7 @@ Now your CoinHive miner would be mining on `nanopool.org` XMR pool, using your m
 You can also do this using the CLI:
 
 ```
-coin-hive ZM4gjqQ0jh0jbZ3tZDByOXAjyotDbo00 --pool-host=xmr-eu1.nanopool.org --pool-port=14444
+coin-hive <YOUR-MONERO-ADDRESS> --pool-host=xmr-eu1.nanopool.org --pool-port=14444
 ```
 
 **Can I run this on Heroku?**

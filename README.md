@@ -153,7 +153,7 @@ All the following environment variables can be used to configure the miner from 
 Yes, you can run this on any pool based on the [Stratum Mining Protocol](https://en.bitcoin.it/wiki/Stratum_mining_protocol).
 
 ```js
-const CoinHive = require('./src');
+const CoinHive = require('coin-hive');
 (async () => {
   const miner = await CoinHive('<YOUR-MONERO-ADDRESS>', {
     pool: {

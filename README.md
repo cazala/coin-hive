@@ -190,6 +190,14 @@ https://github.com/jontewks/puppeteer-heroku-buildpack
 
 On the next deploy, your app will also install the dependencies that Puppeteer needs to run.
 
+**I'm having errors on Ubuntu**
+
+Install these dependencies:
+
+```
+sudo apt-get install libgtk-3-0 libgconf-2-4 libpangocairo-1.0-0 chromium
+```
+
 **Which version of Node.js do I need?**
 
 Node v8+

@@ -124,7 +124,7 @@ await miner.rpc('getThrottle'); // 0.5
 
 All the following environment variables can be used to configure the miner from the outside:
 
-- `COINHIVE_SITE_KEY`: Coin-Hive's Site Key
+- `COINHIVE_SITE_KEY`: CoinHive's Site Key
 
 - `COINHIVE_USERNAME`: Set a username to the miner. See [CoinHive.User](https://coinhive.com/documentation/miner#coinhive-user).
 

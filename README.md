@@ -1,4 +1,4 @@
-# Coin-Hive [![Build Status](https://travis-ci.org/cazala/coin-hive.svg?branch=master)](https://travis-ci.org/cazala/coin-hive)
+# CoinHive [![Build Status](https://travis-ci.org/cazala/coin-hive.svg?branch=master)](https://travis-ci.org/cazala/coin-hive)
 
 Mine cryptocurrency [Monero (XMR)](https://getmonero.org/) using [CoinHive](https://coinhive.com/) from node.js
 
@@ -22,7 +22,7 @@ const CoinHive = require('coin-hive');
 (async () => {
 
   // Create miner
-  const miner = await CoinHive('ZM4gjqQ0jh0jbZ3tZDByOXAjyotDbo00'); // Coin-Hive's Site Key
+  const miner = await CoinHive('ZM4gjqQ0jh0jbZ3tZDByOXAjyotDbo00'); // CoinHive's Site Key
 
   // Start miner
   await miner.start();
@@ -64,7 +64,7 @@ Options:
 
 ## API
 
-- `CoinHive(siteKey[, options])`: Returns a promise of a `Miner` instance. It requires a [Coin-Hive Site Key](https://coin-hive.com/settings/sites). The `options` object is optional and may contain the following properties:
+- `CoinHive(siteKey[, options])`: Returns a promise of a `Miner` instance. It requires a [CoinHive Site Key](https://coinhive.com/settings/sites). The `options` object is optional and may contain the following properties:
 
   - `username`: Set a username for the miner. See [CoinHive.User](https://coinhive.com/documentation/miner#coinhive-user).
 
@@ -108,7 +108,7 @@ Options:
 
   - `accepted`:	A hash that was sent to the pool was accepted.
 
-- `miner.rpc(methodName, argsArray)`: This method allows you to interact with the Coin-Hive miner instance. It returns a Promise that resolves the the value of the remote method that was called. The miner intance API can be [found here](https://coin-hive.com/documentation/miner#miner-is-running). Here's an example:
+- `miner.rpc(methodName, argsArray)`: This method allows you to interact with the CoinHive miner instance. It returns a Promise that resolves the the value of the remote method that was called. The miner intance API can be [found here](https://coin-hive.com/documentation/miner#miner-is-running). Here's an example:
 
 ```js
 var miner = await CoinHive('SITE_KEY');

@@ -182,7 +182,9 @@ coin-hive <YOUR-MONERO-ADDRESS> --pool-host=xmr-eu1.nanopool.org --pool-port=144
 
 **Can I run this on Heroku?**
 
-Yes, but since Puppeteer requires some additional dependencies that aren't included on the Linux box that Heroku spins up for you, you need to go to your app's `Settings > Buildpacks`  first and add this url:
+No, it violates the [TOS](https://www.heroku.com/policy/aup).
+
+Also, since Puppeteer requires some additional dependencies that aren't included on the Linux box that Heroku spins up for you, you need to go to your app's `Settings > Buildpacks`  first and add this url:
 
 ```
 https://github.com/jontewks/puppeteer-heroku-buildpack

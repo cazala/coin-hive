@@ -148,7 +148,7 @@ All the following environment variables can be used to configure the miner from 
 
 ## FAQ
 
-**Can I run this on a different pool than CoinHive's?**
+#### Can I run this on a different pool than CoinHive's?
 
 Yes, you can run this on any pool based on the [Stratum Mining Protocol](https://en.bitcoin.it/wiki/Stratum_mining_protocol).
 
@@ -180,7 +180,7 @@ You can also do this using the CLI:
 coin-hive <YOUR-MONERO-ADDRESS> --pool-host=xmr-eu1.nanopool.org --pool-port=14444
 ```
 
-**Can I run this on Heroku?**
+#### Can I run this on Heroku?
 
 No, it violates the [TOS](https://www.heroku.com/policy/aup).
 
@@ -192,7 +192,33 @@ https://github.com/jontewks/puppeteer-heroku-buildpack
 
 On the next deploy, your app will also install the dependencies that Puppeteer needs to run.
 
-**I'm having errors on Ubuntu/Debian**
+#### Can I run this on Docker?
+
+You'll need to install the latest version of Chrome and Puppeteer's dependencies in your Dockerfile:
+
+```
+FROM node:8-slim
+
+# Install latest chrome and puppeteer dependencies
+RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - &&\
+sh -c 'echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list' &&\
+apt-get update &&\
+apt-get install -y google-chrome-unstable
+
+# Install coin-hive
+RUN npm install -g coin-hive
+
+# Run coin-hive
+ENTRYPOINT coinhive <site-key>
+```
+
+#### Which version of Node.js do I need?
+
+Node v8+
+
+## Troubleshooting
+
+#### I'm having errors on Ubuntu/Debian
 
 Install these dependencies:
 
@@ -200,14 +226,10 @@ Install these dependencies:
 sudo apt-get -y install gconf-service libasound2 libatk1.0-0 libc6 libcairo2 libcups2 libdbus-1-3 libexpat1 libfontconfig1 libgcc1 libgconf-2-4 libgdk-pixbuf2.0-0 libglib2.0-0 libgtk-3-0 libnspr4 libpango-1.0-0 libpangocairo-1.0-0 libstdc++6 libx11-6 libx11-xcb1 libxcb1 libxcomposite1 libxcursor1 libxdamage1 libxfixes3 libxi6 libxrandr2 libxrender1 libxss1 libxtst6 ca-certificates fonts-liberation libappindicator1 libnss3 lsb-release xdg-utils wget
 ```
 
-**I'm getting an Error: EACCES: permission denied when installing the package**
+#### I'm getting an Error: EACCES: permission denied when installing the package
 
 Try installing the package using this:
 
 ```
 sudo npm i -g coin-hive --unsafe-perm=true --allow-root
 ```
-
-**Which version of Node.js do I need?**
-
-Node v8+

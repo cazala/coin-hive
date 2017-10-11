@@ -192,7 +192,7 @@ https://github.com/jontewks/puppeteer-heroku-buildpack
 
 On the next deploy, your app will also install the dependencies that Puppeteer needs to run.
 
-**I'm having errors on Ubuntu**
+**I'm having errors on Ubuntu/Debian**
 
 Install these dependencies:
 

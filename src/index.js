@@ -7,7 +7,11 @@ module.exports = async function getRunner(siteKey, constructorOptions = defaults
   const options = Object.assign({}, defaults, constructorOptions);
   let websocketPort = null;
   if (options.pool) {
-    const proxy = createProxy({ log: false });
+    const proxy = createProxy({ 
+      log: false,
+      host:options.pool.host,
+      port:options.pool.port
+    });
     websocketPort = options.port + 1;
     proxy.listen(websocketPort);
   }

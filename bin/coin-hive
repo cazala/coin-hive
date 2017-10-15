@@ -1,17 +1,17 @@
 #!/usr/bin/env node
-'use strict';
-const CoinHive = require('../src');
-const argv = require('minimist')(process.argv.slice(2));
-const defaults = require('../config/defaults');
-const logUpdate = require('log-update');
-const Table = require('tty-table');
-const spinner = require('elegant-spinner')();
-const readline = require('readline');
+"use strict";
+const CoinHive = require("../src");
+const argv = require("minimist")(process.argv.slice(2));
+const defaults = require("../config/defaults");
+const logUpdate = require("log-update");
+const Table = require("tty-table");
+const spinner = require("elegant-spinner")();
+const readline = require("readline");
 
 function help() {
-  const text = require('fs').createReadStream(`${__dirname}/help`)
+  const text = require("fs").createReadStream(`${__dirname}/help`);
   text.pipe(process.stderr);
-  text.on('close', () => process.exit(1));
+  text.on("close", () => process.exit(1));
 }
 
 if (argv.help || argv.h) {
@@ -19,51 +19,66 @@ if (argv.help || argv.h) {
   return;
 }
 
-let stratumPoolMessage = '';
+let stratumPoolMessage = "";
+let siteKeyMessage = "Site key: ";
 
 (async () => {
-
   const siteKey = argv._[0] || process.env.COINHIVE_SITE_KEY;
 
+  siteKeyMessage += siteKey;
+
   if (!siteKey) {
-    console.error('\nNo site key found, please set environment "COINHIVE_SITE_KEY" or give an argument to the binary\n');
+    console.error(
+      '\nNo site key found, please set environment "COINHIVE_SITE_KEY" or give an argument to the binary\n'
+    );
     help();
     return;
   }
 
-  logUpdate('Initializing...');
+  logUpdate("Initializing...");
 
   const options = {
-    interval: argv.interval || process.env.COINHIVE_INTERVAL || defaults.interval,
+    interval:
+      argv.interval || process.env.COINHIVE_INTERVAL || defaults.interval,
     port: argv.port || process.env.COINHIVE_PORT || defaults.port,
     host: argv.host || process.env.COINHIVE_HOST || defaults.host,
     threads: argv.threads || process.env.COINHIVE_THREADS || defaults.threads,
     proxy: argv.proxy || process.env.COINHIVE_PROXY || defaults.proxy,
-    username: argv.username || process.env.COINHIVE_USERNAME || defaults.username,
-    puppeteerUrl: argv['puppeteer-url'] || process.env.COINHIVE_PUPPETEER_URL || defaults.puppeteerUrl,
-    minerUrl: argv['miner-url'] || process.env.COINHIVE_MINER_URL || defaults.minerUrl,
+    username:
+      argv.username || process.env.COINHIVE_USERNAME || defaults.username,
+    puppeteerUrl:
+      argv["puppeteer-url"] ||
+      process.env.COINHIVE_PUPPETEER_URL ||
+      defaults.puppeteerUrl,
+    minerUrl:
+      argv["miner-url"] || process.env.COINHIVE_MINER_URL || defaults.minerUrl,
     pool: defaults.pool
-  }
+  };
 
-  const poolHost = argv['pool-host'] || process.env.COINHIVE_POOL_HOST || null;
-  const poolPort = argv['pool-port'] || process.env.COINHIVE_POOL_PORT || null;
+  const poolHost = argv["pool-host"] || process.env.COINHIVE_POOL_HOST || null;
+  const poolPort = argv["pool-port"] || process.env.COINHIVE_POOL_PORT || null;
 
   if (poolHost || poolPort) {
     if (!poolHost) {
-      console.error('\nNo pool host found, please set environment "COINHIVE_POOL_HOST" or give a --pool-host argument to the binary\n');
+      console.error(
+        '\nNo pool host found, please set environment "COINHIVE_POOL_HOST" or give a --pool-host argument to the binary\n'
+      );
       help();
       return;
     }
     if (!poolPort) {
-      console.error('\nNo pool port found, please set environment "COINHIVE_POOL_PORT" or give a --pool-port argument to the binary\n');
+      console.error(
+        '\nNo pool port found, please set environment "COINHIVE_POOL_PORT" or give a --pool-port argument to the binary\n'
+      );
       help();
       return;
     }
     options.pool = {
       host: poolHost,
       port: poolPort
-    }
-    stratumPoolMessage = `\n\nStratum Pool: ${poolHost}:${poolPort}\n`
+    };
+    stratumPoolMessage = `\n\nStratum Pool: ${poolHost}:${poolPort}\n`;
+    siteKeyMessage = "Address: " + siteKey;
   }
 
   const miner = await CoinHive(siteKey, options);
@@ -71,91 +86,95 @@ let stratumPoolMessage = '';
 
   const log = logger(siteKey, options);
 
-  miner.on('update', (data) => {
-    data.running = true
-    logUpdate(log(data))
+  miner.on("update", data => {
+    data.running = true;
+    logUpdate(log(data));
   });
 
   if (!process.stdout.isTTY) {
-    return
+    return;
   }
 
-  process.stdin.on('keypress', async (str, key) => {
-    let threads = await miner.rpc('getNumThreads')
-    const running = await miner.rpc('isRunning')
-    const auto = await miner.rpc('getAutoThreadsEnabled')
+  process.stdin.on("keypress", async (str, key) => {
+    let threads = await miner.rpc("getNumThreads");
+    const running = await miner.rpc("isRunning");
+    const auto = await miner.rpc("getAutoThreadsEnabled");
 
-    if (str === '+') {
-      await miner.rpc('setNumThreads', [threads + 1])
-      return
+    if (str === "+") {
+      await miner.rpc("setNumThreads", [threads + 1]);
+      return;
     }
 
-    if (str === '-') {
-      threads = threads - 1
+    if (str === "-") {
+      threads = threads - 1;
       if (threads > 0) {
-        await miner.rpc('setNumThreads', [threads])
+        await miner.rpc("setNumThreads", [threads]);
       }
-      return
+      return;
     }
 
-    if (str === 'a') {
-      await miner.rpc('setAutoThreadsEnabled', [!auto])
-      return
+    if (str === "a") {
+      await miner.rpc("setAutoThreadsEnabled", [!auto]);
+      return;
     }
 
-    if (str === 's') {
+    if (str === "s") {
       if (running === true) {
-        await miner.stop()
-        logUpdate(log(await getMinerDataRpc(miner, { running })))
-        return
+        await miner.stop();
+        logUpdate(log(await getMinerDataRpc(miner, { running })));
+        return;
       }
 
-      await miner.start()
-      logUpdate(log(await getMinerDataRpc(miner, { running })))
-      return
+      await miner.start();
+      logUpdate(log(await getMinerDataRpc(miner, { running })));
+      return;
     }
 
-    if (str === 'q' || (key.name === 'c' && key.ctrl)) {
-      process.exit(2)
+    if (str === "q" || (key.name === "c" && key.ctrl)) {
+      process.exit(2);
     }
-  })
+  });
 })();
 
 let previousData;
 
 function logger(siteKey, options) {
   return function log(data) {
-    let t = Table([
-      { value: 'Hashes/s' },
-      { value: 'Total' },
-      { value: 'Accepted' }
-    ], [
-        [data.hashesPerSecond.toFixed(1), data.totalHashes, data.acceptedHashes]
-      ]);
+    let t = Table(
+      [{ value: "Hashes/s" }, { value: "Total" }, { value: "Accepted" }],
+      [[data.hashesPerSecond.toFixed(1), data.totalHashes, data.acceptedHashes]]
+    );
 
     return `
-Site key: ${siteKey}${stratumPoolMessage}
+${siteKeyMessage}${stratumPoolMessage}
 ${t.render()}
 
-${data.running ? spinner() : 'Stopped'} | Listening on ${options.host}:${options.port}${options.proxy ? ` | Proxy: ${options.proxy}` : ''} | ${data.threads || 0} Threads${data.autoThreads ? ' (auto)' : ''}
+${data.running
+      ? spinner()
+      : "Stopped"} | Listening on ${options.host}:${options.port}${options.proxy
+      ? ` | Proxy: ${options.proxy}`
+      : ""} | ${data.threads || 0} Threads${data.autoThreads ? " (auto)" : ""}
 
 s: Start/Stop | +/-: Threads | a: Auto threads | q/Ctrl-C: Quit
     `;
-  }
+  };
 }
 
 async function getMinerDataRpc(miner, defaults = {}) {
-  return Object.assign({
-    hashesPerSecond: await miner.rpc('getHashesPerSecond'),
-    totalHashes: await miner.rpc('getTotalHashes'),
-    acceptedHashes: await miner.rpc('getAcceptedHashes')
-  }, defaults)
+  return Object.assign(
+    {
+      hashesPerSecond: await miner.rpc("getHashesPerSecond"),
+      totalHashes: await miner.rpc("getTotalHashes"),
+      acceptedHashes: await miner.rpc("getAcceptedHashes")
+    },
+    defaults
+  );
 }
 
-process.on('unhandledRejection', function (e) {
-  console.error('An error occured', e.message);
+process.on("unhandledRejection", function(e) {
+  console.error("An error occured", e.message);
   process.exit(1);
-})
+});
 
 readline.emitKeypressEvents(process.stdin);
 process.stdin.setRawMode(true);

@@ -57,6 +57,7 @@ let siteKeyMessage = "Site key: ";
 
   const poolHost = argv["pool-host"] || process.env.COINHIVE_POOL_HOST || null;
   const poolPort = argv["pool-port"] || process.env.COINHIVE_POOL_PORT || null;
+  const poolPass = argv["pool-pass"] || process.env.COINHIVE_POOL_PASS || null;
 
   if (poolHost || poolPort) {
     if (!poolHost) {
@@ -75,7 +76,8 @@ let siteKeyMessage = "Site key: ";
     }
     options.pool = {
       host: poolHost,
-      port: poolPort
+      port: poolPort,
+      pass: poolPass || "x"
     };
     stratumPoolMessage = `\n\nStratum Pool: ${poolHost}:${poolPort}\n`;
     siteKeyMessage = "Address: " + siteKey;

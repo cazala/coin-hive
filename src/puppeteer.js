@@ -1,9 +1,18 @@
-const EventEmitter = require('events');
-const puppeteer = require('puppeteer');
+const EventEmitter = require("events");
+const puppeteer = require("puppeteer");
 
 class Puppeteer extends EventEmitter {
-
-  constructor({ siteKey, interval, host, port, server, threads, proxy, username, url }) {
+  constructor({
+    siteKey,
+    interval,
+    host,
+    port,
+    server,
+    threads,
+    proxy,
+    username,
+    url
+  }) {
     super();
     this.inited = false;
     this.dead = false;
@@ -21,7 +30,11 @@ class Puppeteer extends EventEmitter {
     if (this.browser) {
       return this.browser;
     }
-    this.browser = await puppeteer.launch({ args: this.proxy ? ['--no-sandbox', '--proxy-server=' + this.proxy] : ['--no-sandbox'] });
+    this.browser = await puppeteer.launch({
+      args: this.proxy
+        ? ["--no-sandbox", "--proxy-server=" + this.proxy]
+        : ["--no-sandbox"]
+    });
     return this.browser;
   }
 
@@ -35,9 +48,8 @@ class Puppeteer extends EventEmitter {
   }
 
   async init() {
-
     if (this.dead) {
-      throw new Error('This miner has been killed');
+      throw new Error("This miner has been killed");
     }
 
     if (this.inited) {
@@ -45,11 +57,22 @@ class Puppeteer extends EventEmitter {
     }
 
     const page = await this.getPage();
-    const url = process.env.COINHIVE_PUPPETEER_URL || this.url || `http://${this.host}:${this.port}`;
+    const url =
+      process.env.COINHIVE_PUPPETEER_URL ||
+      this.url ||
+      `http://${this.host}:${this.port}`;
     await page.goto(url);
-    await page.exposeFunction('emitMessage', (event, message) => this.emit(event, message));
-    await page.exposeFunction('update', (data, interval) => this.emit('update', data, interval));
-    await page.evaluate(({ siteKey, interval, threads, username }) => window.init({ siteKey, interval, threads, username }), this.options);
+    await page.exposeFunction("emitMessage", (event, message) =>
+      this.emit(event, message)
+    );
+    await page.exposeFunction("update", (data, interval) =>
+      this.emit("update", data, interval)
+    );
+    await page.evaluate(
+      ({ siteKey, interval, threads, username }) =>
+        window.init({ siteKey, interval, threads, username }),
+      this.options
+    );
 
     this.inited = true;
 
@@ -67,28 +90,38 @@ class Puppeteer extends EventEmitter {
   }
 
   async kill() {
-    this.on('error', () => { })
+    this.on("error", () => {});
     try {
       await this.stop();
-    } catch (e) { console.log('Error stopping miner', e) }
+    } catch (e) {
+      console.log("Error stopping miner", e);
+    }
     try {
       const browser = await this.getBrowser();
       await browser.close();
-    } catch (e) { console.log('Error closing browser', e) }
+    } catch (e) {
+      console.log("Error closing browser", e);
+    }
     try {
       if (this.server) {
         this.server.close();
       }
-    } catch (e) { console.log('Error closing server', e) }
+    } catch (e) {
+      console.log("Error closing server", e);
+    }
     this.dead = true;
   }
 
   async rpc(method, args) {
     await this.init();
-    return this.page.evaluate((method, args) => window.miner[method].apply(window.miner, args), method, args)
+    return this.page.evaluate(
+      (method, args) => window.miner[method].apply(window.miner, args),
+      method,
+      args
+    );
   }
 }
 
 module.exports = function getPuppeteer(options = {}) {
   return new Puppeteer(options);
-}
+};

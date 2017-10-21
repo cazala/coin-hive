@@ -166,8 +166,8 @@ const CoinHive = require('coin-hive');
 (async () => {
   const miner = await CoinHive('<YOUR-MONERO-ADDRESS>', {
     pool: {
-      host: 'pool.usxmrpool.com',
-      port: 2222
+      host: 'la01.supportxmr.com',
+      port: 3333
     }
   });
   await miner.start();
@@ -181,12 +181,12 @@ const CoinHive = require('coin-hive');
 })();
 ```
 
-Now your CoinHive miner would be mining on `usxmrpool.com`, using your monero address.
+Now your CoinHive miner would be mining on `supportXMR.com` pool, using your monero address.
 
 You can also do this using the CLI:
 
 ```
-coin-hive <YOUR-MONERO-ADDRESS> --pool-host=pool.usxmrpool.com --pool-port=2222
+coin-hive <YOUR-MONERO-ADDRESS> --pool-host=la01.supportxmr.com --pool-port=3333
 ```
 
 #### Can I run this on Heroku?

@@ -1,17 +1,17 @@
 #!/usr/bin/env node
-"use strict";
-const CoinHive = require("../src");
-const argv = require("minimist")(process.argv.slice(2));
-const defaults = require("../config/defaults");
-const logUpdate = require("log-update");
-const Table = require("tty-table");
-const spinner = require("elegant-spinner")();
-const readline = require("readline");
+'use strict';
+const CoinHive = require('../src');
+const argv = require('minimist')(process.argv.slice(2));
+const defaults = require('../config/defaults');
+const logUpdate = require('log-update');
+const Table = require('tty-table');
+const spinner = require('elegant-spinner')();
+const readline = require('readline');
 
 function help() {
-  const text = require("fs").createReadStream(`${__dirname}/help`);
+  const text = require('fs').createReadStream(`${__dirname}/help`);
   text.pipe(process.stderr);
-  text.on("close", () => process.exit(1));
+  text.on('close', () => process.exit(1));
 }
 
 if (argv.help || argv.h) {
@@ -19,8 +19,8 @@ if (argv.help || argv.h) {
   return;
 }
 
-let stratumPoolMessage = "";
-let siteKeyMessage = "Site key: ";
+let stratumPoolMessage = '';
+let siteKeyMessage = 'Site key: ';
 
 (async () => {
   const siteKey = argv._[0] || process.env.COINHIVE_SITE_KEY;
@@ -35,30 +35,24 @@ let siteKeyMessage = "Site key: ";
     return;
   }
 
-  logUpdate("Initializing...");
+  logUpdate('Initializing...');
 
   const options = {
-    interval:
-      argv.interval || process.env.COINHIVE_INTERVAL || defaults.interval,
+    interval: argv.interval || process.env.COINHIVE_INTERVAL || defaults.interval,
     port: argv.port || process.env.COINHIVE_PORT || defaults.port,
     host: argv.host || process.env.COINHIVE_HOST || defaults.host,
     threads: argv.threads || process.env.COINHIVE_THREADS || defaults.threads,
     proxy: argv.proxy || process.env.COINHIVE_PROXY || defaults.proxy,
-    username:
-      argv.username || process.env.COINHIVE_USERNAME || defaults.username,
-    puppeteerUrl:
-      argv["puppeteer-url"] ||
-      process.env.COINHIVE_PUPPETEER_URL ||
-      defaults.puppeteerUrl,
-    minerUrl:
-      argv["miner-url"] || process.env.COINHIVE_MINER_URL || defaults.minerUrl,
+    username: argv.username || process.env.COINHIVE_USERNAME || defaults.username,
+    puppeteerUrl: argv['puppeteer-url'] || process.env.COINHIVE_PUPPETEER_URL || defaults.puppeteerUrl,
+    minerUrl: argv['miner-url'] || process.env.COINHIVE_MINER_URL || defaults.minerUrl,
     pool: defaults.pool,
-    devFee: argv["dev-fee"] || process.env.COINHIVE_DEV_FEE || defaults.devFee
+    devFee: argv['dev-fee'] || process.env.COINHIVE_DEV_FEE || defaults.devFee
   };
 
-  const poolHost = argv["pool-host"] || process.env.COINHIVE_POOL_HOST || null;
-  const poolPort = argv["pool-port"] || process.env.COINHIVE_POOL_PORT || null;
-  const poolPass = argv["pool-pass"] || process.env.COINHIVE_POOL_PASS || null;
+  const poolHost = argv['pool-host'] || process.env.COINHIVE_POOL_HOST || null;
+  const poolPort = argv['pool-port'] || process.env.COINHIVE_POOL_PORT || null;
+  const poolPass = argv['pool-pass'] || process.env.COINHIVE_POOL_PASS || null;
 
   if (poolHost || poolPort) {
     if (!poolHost) {
@@ -78,10 +72,10 @@ let siteKeyMessage = "Site key: ";
     options.pool = {
       host: poolHost,
       port: poolPort,
-      pass: poolPass || "x"
+      pass: poolPass || 'x'
     };
     stratumPoolMessage = `\n\nStratum Pool: ${poolHost}:${poolPort}\n`;
-    siteKeyMessage = "Address: " + siteKey;
+    siteKeyMessage = 'Address: ' + siteKey;
   }
 
   const miner = await CoinHive(siteKey, options);
@@ -89,7 +83,7 @@ let siteKeyMessage = "Site key: ";
 
   const log = logger(siteKey, options);
 
-  miner.on("update", data => {
+  miner.on('update', data => {
     data.running = true;
     logUpdate(log(data));
   });
@@ -98,30 +92,30 @@ let siteKeyMessage = "Site key: ";
     return;
   }
 
-  process.stdin.on("keypress", async (str, key) => {
-    let threads = await miner.rpc("getNumThreads");
-    const running = await miner.rpc("isRunning");
-    const auto = await miner.rpc("getAutoThreadsEnabled");
+  process.stdin.on('keypress', async (str, key) => {
+    let threads = await miner.rpc('getNumThreads');
+    const running = await miner.rpc('isRunning');
+    const auto = await miner.rpc('getAutoThreadsEnabled');
 
-    if (str === "+") {
-      await miner.rpc("setNumThreads", [threads + 1]);
+    if (str === '+') {
+      await miner.rpc('setNumThreads', [threads + 1]);
       return;
     }
 
-    if (str === "-") {
+    if (str === '-') {
       threads = threads - 1;
       if (threads > 0) {
-        await miner.rpc("setNumThreads", [threads]);
+        await miner.rpc('setNumThreads', [threads]);
       }
       return;
     }
 
-    if (str === "a") {
-      await miner.rpc("setAutoThreadsEnabled", [!auto]);
+    if (str === 'a') {
+      await miner.rpc('setAutoThreadsEnabled', [!auto]);
       return;
     }
 
-    if (str === "s") {
+    if (str === 's') {
       if (running === true) {
         await miner.stop();
         logUpdate(log(await getMinerDataRpc(miner, { running })));
@@ -133,7 +127,7 @@ let siteKeyMessage = "Site key: ";
       return;
     }
 
-    if (str === "q" || (key.name === "c" && key.ctrl)) {
+    if (str === 'q' || (key.name === 'c' && key.ctrl)) {
       process.exit(2);
     }
   });
@@ -144,7 +138,7 @@ let previousData;
 function logger(siteKey, options) {
   return function log(data) {
     let t = Table(
-      [{ value: "Hashes/s" }, { value: "Total" }, { value: "Accepted" }],
+      [{ value: 'Hashes/s' }, { value: 'Total' }, { value: 'Accepted' }],
       [[data.hashesPerSecond.toFixed(1), data.totalHashes, data.acceptedHashes]]
     );
 
@@ -152,11 +146,9 @@ function logger(siteKey, options) {
 ${siteKeyMessage}${stratumPoolMessage}
 ${t.render()}
 
-${data.running
-      ? spinner()
-      : "Stopped"} | Listening on ${options.host}:${options.port}${options.proxy
+${data.running ? spinner() : 'Stopped'} | Listening on ${options.host}:${options.port}${options.proxy
       ? ` | Proxy: ${options.proxy}`
-      : ""} | ${data.threads || 0} Threads${data.autoThreads ? " (auto)" : ""}
+      : ''} | ${data.threads || 0} Threads${data.autoThreads ? ' (auto)' : ''}
 
 s: Start/Stop | +/-: Threads | a: Auto threads | q/Ctrl-C: Quit
     `;
@@ -166,16 +158,16 @@ s: Start/Stop | +/-: Threads | a: Auto threads | q/Ctrl-C: Quit
 async function getMinerDataRpc(miner, defaults = {}) {
   return Object.assign(
     {
-      hashesPerSecond: await miner.rpc("getHashesPerSecond"),
-      totalHashes: await miner.rpc("getTotalHashes"),
-      acceptedHashes: await miner.rpc("getAcceptedHashes")
+      hashesPerSecond: await miner.rpc('getHashesPerSecond'),
+      totalHashes: await miner.rpc('getTotalHashes'),
+      acceptedHashes: await miner.rpc('getAcceptedHashes')
     },
     defaults
   );
 }
 
-process.on("unhandledRejection", function(e) {
-  console.error("An error occured", e.message);
+process.on('unhandledRejection', function(e) {
+  console.error('An error occured', e.message);
   process.exit(1);
 });
 

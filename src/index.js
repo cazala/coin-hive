@@ -1,12 +1,9 @@
-const server = require("./server");
-const puppeteer = require("./puppeteer");
-const defaults = require("../config/defaults");
-const createProxy = require("coin-hive-stratum");
+const server = require('./server');
+const puppeteer = require('./puppeteer');
+const defaults = require('../config/defaults');
+const createProxy = require('coin-hive-stratum');
 
-module.exports = async function getRunner(
-  siteKey,
-  constructorOptions = defaults
-) {
+module.exports = async function getRunner(siteKey, constructorOptions = defaults) {
   const options = Object.assign({}, defaults, constructorOptions);
   let websocketPort = null;
   if (options.pool) {
@@ -14,7 +11,7 @@ module.exports = async function getRunner(
       log: false,
       host: options.pool.host,
       port: options.pool.port,
-      pass: options.pool.pass || "x"
+      pass: options.pool.pass || 'x'
     });
     websocketPort = options.port + 1;
     proxy.listen(websocketPort);

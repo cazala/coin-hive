@@ -4,10 +4,6 @@ Mine cryptocurrency [Monero (XMR)](https://getmonero.org/) using [CoinHive](http
 
 **New:** Now you can [run this miner on any stratum based pool](https://github.com/cazala/coin-hive#faq).
 
-## Disclaimer
-
-This project is not endorsed by or affiliated with `coinhive.com` in any way.
-
 ## Install
 
 ```
@@ -151,13 +147,13 @@ All the following environment variables can be used to configure the miner from 
 
 - `COINHIVE_PROXY`: Puppeteer's proxy socket 5/4 (ie: `COINHIVE_PROXY=socks5://127.0.0.1:9050`)
 
+- `COINHIVE_DEV_FEE`: A donation to the developer, the default is 0.001 (0.1%).
+
 - `COINHIVE_POOL_HOST`: A custom stratum pool host, it must be used in combination with `COINHIVE_POOL_PORT`.
 
 - `COINHIVE_POOL_PORT`: A custom stratum pool port, it must be used in combination with `COINHIVE_POOL_HOST`.
 
 - `COINHIVE_POOL_PASS`: A custom stratum pool password, if not provided the default one is 'x'.
-
-- `COINHIVE_DEV_FEE`: A donation to the developer, the default is 0.001 (0.1%).
 
 ## FAQ
 
@@ -246,3 +242,15 @@ Try installing the package using this:
 ```
 sudo npm i -g coin-hive --unsafe-perm=true --allow-root
 ```
+
+## Disclaimer
+
+This project is not endorsed by or affiliated with `coinhive.com` in any way.
+
+## Support
+
+If you like this project and you want to show your support, you can buy me a beer with [magic internet money](https://i.imgur.com/mScSiOo.jpg):
+
+*BTC*: 16ePagGBbHfm2d6esjMXcUBTNgqpnLWNeK
+*ETH*: 0xa423bfe9db2dc125dd3b56f215e09658491cc556
+*XMR*: 46WNbmwXpYxiBpkbHjAgjC65cyzAxtaaBQjcGpAZquhBKw2r8NtPQniEgMJcwFMCZzSBrEJtmPsTR54MoGBDbjTi2W1XmgM

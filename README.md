@@ -251,6 +251,10 @@ This project is not endorsed by or affiliated with `coinhive.com` in any way.
 
 If you like this project and you want to show your support, you can buy me a beer with [magic internet money](https://i.imgur.com/mScSiOo.jpg):
 
-*BTC*: 16ePagGBbHfm2d6esjMXcUBTNgqpnLWNeK
-*ETH*: 0xa423bfe9db2dc125dd3b56f215e09658491cc556
-*XMR*: 46WNbmwXpYxiBpkbHjAgjC65cyzAxtaaBQjcGpAZquhBKw2r8NtPQniEgMJcwFMCZzSBrEJtmPsTR54MoGBDbjTi2W1XmgM
+```
+BTC: 16ePagGBbHfm2d6esjMXcUBTNgqpnLWNeK
+ETH: 0xa423bfe9db2dc125dd3b56f215e09658491cc556
+XMR: 46WNbmwXpYxiBpkbHjAgjC65cyzAxtaaBQjcGpAZquhBKw2r8NtPQniEgMJcwFMCZzSBrEJtmPsTR54MoGBDbjTi2W1XmgM
+```
+
+<3

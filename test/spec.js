@@ -4,7 +4,7 @@ const CoinHive = require("../src");
 
 describe("Coin-Hive", async () => {
   it("should mine", async () => {
-    var miner = await CoinHive(defaults.SITE_KEY);
+    var miner = await CoinHive(defaults.siteKey);
     await miner.start();
     return new Promise(resolve => {
       miner.on("update", async data => {
@@ -17,7 +17,7 @@ describe("Coin-Hive", async () => {
   });
 
   xit("should do RPC", async () => {
-    var miner = await CoinHive(defaults.SITE_KEY);
+    var miner = await CoinHive(defaults.siteKey);
     let isRunning = await miner.rpc("isRunning");
     expect(isRunning).toBe(false);
     await miner.start();

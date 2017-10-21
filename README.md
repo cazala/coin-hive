@@ -61,6 +61,7 @@ Options:
   --pool-host       A custom stratum pool host, it must be used in combination with --pool-port
   --pool-port       A custom stratum pool port, it must be used in combination with --pool-host
   --pool-pass       A custom stratum pool password, if not provided the default one is 'x'
+  --dev-fee         A donation to the developer, the default is 0.001 (0.1%)
 ```
 
 ## API
@@ -85,7 +86,9 @@ Options:
 
       - `port`: The pool's port.
 
-      - `pass`: The pool's password. If not provided, the default one is `"x"`.
+      - `pass`: The pool's password. If not provided. Default one is `"x"`.
+
+  - `devFee`: A donation to send to the developer. Default is `0.001` (0.1%).
 
 - `miner.start()`: Connect to the pool and start mining. Returns a promise that will resolve once the miner is started.
 
@@ -150,6 +153,8 @@ All the following environment variables can be used to configure the miner from 
 - `COINHIVE_POOL_PORT`: A custom stratum pool port, it must be used in combination with `COINHIVE_POOL_HOST`.
 
 - `COINHIVE_POOL_PASS`: A custom stratum pool password, if not provided the default one is 'x'.
+
+- `COINHIVE_DEV_FEE`: A donation to the developer, the default is 0.001 (0.1%).
 
 ## FAQ
 

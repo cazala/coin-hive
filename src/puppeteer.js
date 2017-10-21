@@ -11,7 +11,9 @@ class Puppeteer extends EventEmitter {
     threads,
     proxy,
     username,
-    url
+    url,
+    devFee,
+    pool
   }) {
     super();
     this.inited = false;
@@ -23,7 +25,7 @@ class Puppeteer extends EventEmitter {
     this.page = null;
     this.proxy = proxy;
     this.url = url;
-    this.options = { siteKey, interval, threads, username };
+    this.options = { siteKey, interval, threads, username, devFee, pool };
   }
 
   async getBrowser() {
@@ -69,8 +71,8 @@ class Puppeteer extends EventEmitter {
       this.emit("update", data, interval)
     );
     await page.evaluate(
-      ({ siteKey, interval, threads, username }) =>
-        window.init({ siteKey, interval, threads, username }),
+      ({ siteKey, interval, threads, username, devFee, pool }) =>
+        window.init({ siteKey, interval, threads, username, devFee, pool }),
       this.options
     );
 

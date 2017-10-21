@@ -39,7 +39,9 @@ module.exports = async function getRunner(
           server: minerServer,
           proxy: options.proxy,
           username: options.username,
-          url: options.puppeteerUrl
+          url: options.puppeteerUrl,
+          devFee: options.devFee,
+          pool: options.pool
         })
       );
     });

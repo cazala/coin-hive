@@ -15,4 +15,4 @@ Options:
   --pool-host       A custom stratum pool host, it must be used in combination with --pool-port
   --pool-port       A custom stratum pool port, it must be used in combination with --pool-host
   --pool-pass       A custom stratum pool password, if not provided the default one is 'x'
-
+  --dev-fee         A donation to the developer, the default is 0.001 (0.1%)

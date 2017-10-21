@@ -52,7 +52,8 @@ let siteKeyMessage = "Site key: ";
       defaults.puppeteerUrl,
     minerUrl:
       argv["miner-url"] || process.env.COINHIVE_MINER_URL || defaults.minerUrl,
-    pool: defaults.pool
+    pool: defaults.pool,
+    devFee: argv["dev-fee"] || process.env.COINHIVE_DEV_FEE || defaults.devFee
   };
 
   const poolHost = argv["pool-host"] || process.env.COINHIVE_POOL_HOST || null;

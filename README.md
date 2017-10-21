@@ -43,13 +43,16 @@ const CoinHive = require('coin-hive');
 
 ## CLI
 
-```
-Usage: coin-hive <site-key>
+Usage:
 
-<site-key>: Your CoinHive Site Key
+
+```
+coin-hive ZM4gjqQ0jh0jbZ3tZDByOXAjyotDbo00
+```
 
 Options:
 
+```
   --username        Set a username for the miner
   --interval        Interval between updates (logs)
   --port            Port for the miner server
@@ -58,10 +61,10 @@ Options:
   --proxy           Proxy socket 5/4, for example: socks5://127.0.0.1:9050
   --puppeteer-url   URL where puppeteer will point to, by default is miner server (host:port)
   --miner-url       URL of CoinHive's JavaScript miner, can be set to use a proxy
+  --dev-fee         A donation to the developer, the default is 0.001 (0.1%)
   --pool-host       A custom stratum pool host, it must be used in combination with --pool-port
   --pool-port       A custom stratum pool port, it must be used in combination with --pool-host
   --pool-pass       A custom stratum pool password, if not provided the default one is 'x'
-  --dev-fee         A donation to the developer, the default is 0.001 (0.1%)
 ```
 
 ## API

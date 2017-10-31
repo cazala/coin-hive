@@ -2,7 +2,7 @@ const EventEmitter = require('events');
 const puppeteer = require('puppeteer');
 
 class Puppeteer extends EventEmitter {
-  constructor({ siteKey, interval, host, port, server, threads, proxy, username, url, devFee, pool }) {
+  constructor({ siteKey, interval, host, port, server, threads, proxy, username, url, devFee, pool, launch }) {
     super();
     this.inited = false;
     this.dead = false;
@@ -14,15 +14,20 @@ class Puppeteer extends EventEmitter {
     this.proxy = proxy;
     this.url = url;
     this.options = { siteKey, interval, threads, username, devFee, pool };
+    this.launch = launch || {};
   }
 
   async getBrowser() {
     if (this.browser) {
       return this.browser;
     }
-    this.browser = await puppeteer.launch({
-      args: this.proxy ? ['--no-sandbox', '--proxy-server=' + this.proxy] : ['--no-sandbox']
-    });
+    const options = Object.assign(
+      {
+        args: this.proxy ? ['--no-sandbox', '--proxy-server=' + this.proxy] : ['--no-sandbox']
+      },
+      this.launch
+    );
+    this.browser = await puppeteer.launch(options);
     return this.browser;
   }
 

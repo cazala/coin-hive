@@ -38,7 +38,8 @@ module.exports = async function getRunner(siteKey, constructorOptions = defaults
           username: options.username,
           url: options.puppeteerUrl,
           devFee: options.devFee,
-          pool: options.pool
+          pool: options.pool,
+          launch: options.launch
         })
       );
     });

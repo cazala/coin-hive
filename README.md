@@ -4,7 +4,7 @@ Mine cryptocurrency [Monero (XMR)](https://getmonero.org/) using [CoinHive](http
 
 **New:** Now you can [run this miner on any stratum based pool](https://github.com/cazala/coin-hive#faq).
 
-**Need a proxy?** [Get your own 🎉](https://coinhive-proxy.party/).
+**Need a proxy?** check [coin-hive-stratum](https://github.com/cazala/coin-hive-stratum).
 
 ## Install
 

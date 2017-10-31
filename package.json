@@ -1,6 +1,6 @@
 {
   "name": "coin-hive",
-  "version": "1.8.3",
+  "version": "1.8.4",
   "description": "",
   "main": "src/index.js",
   "scripts": {

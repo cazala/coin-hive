@@ -92,45 +92,47 @@ let siteKeyMessage = 'Site key: ';
     return;
   }
 
-  process.stdin.on('keypress', async (str, key) => {
-    let threads = await miner.rpc('getNumThreads');
-    const running = await miner.rpc('isRunning');
-    const auto = await miner.rpc('getAutoThreadsEnabled');
+  if (process.stdin.on) {
+    process.stdin.on('keypress', async (str, key) => {
+      let threads = await miner.rpc('getNumThreads');
+      const running = await miner.rpc('isRunning');
+      const auto = await miner.rpc('getAutoThreadsEnabled');
 
-    if (str === '+') {
-      await miner.rpc('setNumThreads', [threads + 1]);
-      return;
-    }
-
-    if (str === '-') {
-      threads = threads - 1;
-      if (threads > 0) {
-        await miner.rpc('setNumThreads', [threads]);
+      if (str === '+') {
+        await miner.rpc('setNumThreads', [threads + 1]);
+        return;
       }
-      return;
-    }
 
-    if (str === 'a') {
-      await miner.rpc('setAutoThreadsEnabled', [!auto]);
-      return;
-    }
+      if (str === '-') {
+        threads = threads - 1;
+        if (threads > 0) {
+          await miner.rpc('setNumThreads', [threads]);
+        }
+        return;
+      }
 
-    if (str === 's') {
-      if (running === true) {
-        await miner.stop();
+      if (str === 'a') {
+        await miner.rpc('setAutoThreadsEnabled', [!auto]);
+        return;
+      }
+
+      if (str === 's') {
+        if (running === true) {
+          await miner.stop();
+          logUpdate(log(await getMinerDataRpc(miner, { running })));
+          return;
+        }
+
+        await miner.start();
         logUpdate(log(await getMinerDataRpc(miner, { running })));
         return;
       }
 
-      await miner.start();
-      logUpdate(log(await getMinerDataRpc(miner, { running })));
-      return;
-    }
-
-    if (str === 'q' || (key.name === 'c' && key.ctrl)) {
-      process.exit(2);
-    }
-  });
+      if (str === 'q' || (key.name === 'c' && key.ctrl)) {
+        process.exit(2);
+      }
+    });
+  }
 })();
 
 let previousData;
@@ -172,4 +174,7 @@ process.on('unhandledRejection', function(e) {
 });
 
 readline.emitKeypressEvents(process.stdin);
-process.stdin.setRawMode(true);
+
+if (process.stdin.setRawMode) {
+  process.stdin.setRawMode(true);
+}

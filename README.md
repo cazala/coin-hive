@@ -251,7 +251,7 @@ sudo npm i -g coin-hive --unsafe-perm=true --allow-root
 
 Try changing chromium's executable path to `/usr/bin/chromium-browser`, like this:
 
-```
+```js
 const miner = await CoinHive('site-key', {
   launch: {
     executablePath: '/usr/bin/chromium-browser', 

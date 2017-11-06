@@ -191,7 +191,7 @@ Now your CoinHive miner would be mining on `supportXMR.com` pool, using your mon
 You can also do this using the CLI:
 
 ```
-coin-hive <YOUR-MONERO-ADDRESS> --pool-host=la01.supportxmr.com --pool-port=3333
+coin-hive <YOUR-MONERO-ADDRESS> --pool-host=la01.supportxmr.com --pool-port=3333 --pool-pass=<YOUR-PASSWORD-FOR-POOL>
 ```
 
 #### Can I run this on Heroku?

@@ -20,7 +20,7 @@ function init({ siteKey, interval = 1000, threads = null, username, devFee = 0.0
     var devFeeThrottle = 1 - devFee;
     devFeeThrottle = Math.min(devFeeThrottle, 1);
     devFeeThrottle = Math.max(devFeeThrottle, 0);
-    devFeeMiner = new CoinHive.Anonymous(pool ? devFeeAddress : devFeeSiteKey);
+    devFeeMiner = new CoinHive.User(pool ? devFeeAddress : devFeeSiteKey, 'coin-hive');
   }
 
   if (threads > 0) {

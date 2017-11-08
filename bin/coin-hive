@@ -79,6 +79,10 @@ let siteKeyMessage = 'Site key: ';
   }
 
   const miner = await CoinHive(siteKey, options);
+  miner.on('error', event => {
+    console.log('Error:', (event && event.error) || JSON.stringify(event));
+    process.exit(1);
+  });
   await miner.start();
 
   const log = logger(siteKey, options);

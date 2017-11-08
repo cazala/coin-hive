@@ -89,7 +89,7 @@ Options:
 
       - `port`: The pool's port.
 
-      - `pass`: The pool's password. If not provided. Default one is `"x"`.
+      - `pass`: The pool's password. If not provided the default one is `"x"`.
 
   - `devFee`: A donation to send to the developer. Default is `0.001` (0.1%).
 
@@ -171,7 +171,8 @@ const CoinHive = require('coin-hive');
   const miner = await CoinHive('<YOUR-MONERO-ADDRESS>', {
     pool: {
       host: 'la01.supportxmr.com',
-      port: 3333
+      port: 3333,
+      pass: '<YOUR-PASSWORD-FOR-POOL>' // default 'x' if not provided 
     }
   });
   await miner.start();
@@ -190,7 +191,7 @@ Now your CoinHive miner would be mining on `supportXMR.com` pool, using your mon
 You can also do this using the CLI:
 
 ```
-coin-hive <YOUR-MONERO-ADDRESS> --pool-host=la01.supportxmr.com --pool-port=3333
+coin-hive <YOUR-MONERO-ADDRESS> --pool-host=la01.supportxmr.com --pool-port=3333 --pool-pass=<YOUR-PASSWORD-FOR-POOL>
 ```
 
 #### Can I run this on Heroku?

@@ -117,7 +117,7 @@ Options:
 
   - `accepted`:	A hash that was sent to the pool was accepted.
 
-- `miner.rpc(methodName, argsArray)`: This method allows you to interact with the CoinHive miner instance. It returns a Promise that resolves the the value of the remote method that was called. The miner intance API can be [found here](https://coin-hive.com/documentation/miner#miner-is-running). Here's an example:
+- `miner.rpc(methodName, argsArray)`: This method allows you to interact with the CoinHive miner instance. It returns a Promise that resolves the the value of the remote method that was called. The miner instance API can be [found here](https://coin-hive.com/documentation/miner#miner-is-running). Here's an example:
 
 ```js
 var miner = await CoinHive('SITE_KEY');

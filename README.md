@@ -1,6 +1,6 @@
 # CoinHive [![Build Status](https://travis-ci.org/cazala/coin-hive.svg?branch=master)](https://travis-ci.org/cazala/coin-hive)
 
-Mine cryptocurrency [Monero (XMR)](https://getmonero.org/) using [CoinHive](https://coinhive.com/) from node.js
+Mine cryptocurrency [Monero (XMR)](https://getmonero.org/) and [Electroneun (ETN)](http://electroneum.com/) using [CoinHive](https://coinhive.com/) from node.js
 
 **New:** Now you can [run this miner on any stratum based pool](https://github.com/cazala/coin-hive#faq).
 

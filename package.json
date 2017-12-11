@@ -30,5 +30,17 @@
   "engines": {
     "node": ">=8.0",
     "npm": ">=5.0"
-  }
+  },
+  "keywords": [
+    "coinhive",
+    "monero",
+    "electroneum",
+    "xmr",
+    "etn",
+    "crypto",
+    "cryptocurrency",
+    "cryptocurrencies",
+    "mining",
+    "miner"
+  ]
 }

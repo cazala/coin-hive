@@ -301,7 +301,7 @@ This project is not endorsed by or affiliated with `coinhive.com` in any way.
 
 ## Support
 
-If you like this project and you want to show your support, you can buy me a beer with [magic internet money](https://i.imgur.com/mScSiOo.jpg):
+This project pre-configured for a 0.1% donation. This can be easily toggled off programatically, from the CLI, or via environment variables. If you do so, but you still want to show your support, you can buy me a beer with [magic internet money](https://i.imgur.com/mScSiOo.jpg):
 
 ```
 BTC: 16ePagGBbHfm2d6esjMXcUBTNgqpnLWNeK

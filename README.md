@@ -20,7 +20,6 @@ npm install -g coin-hive
 const CoinHive = require('coin-hive');
 
 (async () => {
-
   // Create miner
   const miner = await CoinHive('ZM4gjqQ0jh0jbZ3tZDByOXAjyotDbo00'); // CoinHive's Site Key
 
@@ -28,13 +27,15 @@ const CoinHive = require('coin-hive');
   await miner.start();
 
   // Listen on events
-  miner.on('found', () => console.log('Found!'))
-  miner.on('accepted', () => console.log('Accepted!'))
-  miner.on('update', data => console.log(`
+  miner.on('found', () => console.log('Found!'));
+  miner.on('accepted', () => console.log('Accepted!'));
+  miner.on('update', data =>
+    console.log(`
     Hashes per second: ${data.hashesPerSecond}
     Total hashes: ${data.totalHashes}
     Accepted hashes: ${data.acceptedHashes}
-  `));
+  `)
+  );
 
   // Stop miner
   setTimeout(async () => await miner.stop(), 60000);
@@ -44,7 +45,6 @@ const CoinHive = require('coin-hive');
 ## CLI
 
 Usage:
-
 
 ```
 coin-hive ZM4gjqQ0jh0jbZ3tZDByOXAjyotDbo00
@@ -58,6 +58,7 @@ Options:
   --port            Port for the miner server
   --host            Host for the miner server
   --threads         Number of threads for the miner
+  --throttle        The fraction of time that threads should be idle
   --proxy           Proxy socket 5/4, for example: socks5://127.0.0.1:9050
   --puppeteer-url   URL where puppeteer will point to, by default is miner server (host:port)
   --miner-url       URL of CoinHive's JavaScript miner, can be set to use a proxy
@@ -69,57 +70,59 @@ Options:
 
 ## API
 
-- `CoinHive(siteKey[, options])`: Returns a promise of a `Miner` instance. It requires a [CoinHive Site Key](https://coinhive.com/settings/sites). The `options` object is optional and may contain the following properties:
+* `CoinHive(siteKey[, options])`: Returns a promise of a `Miner` instance. It requires a [CoinHive Site Key](https://coinhive.com/settings/sites). The `options` object is optional and may contain the following properties:
 
-  - `username`: Set a username for the miner. See [CoinHive.User](https://coinhive.com/documentation/miner#coinhive-user).
+  * `username`: Set a username for the miner. See [CoinHive.User](https://coinhive.com/documentation/miner#coinhive-user).
 
-  - `interval`: Interval between `update` events in ms. Default is `1000`.
+  * `interval`: Interval between `update` events in ms. Default is `1000`.
 
-  - `port`: Port for the miner server. Default is `3002`.
+  * `port`: Port for the miner server. Default is `3002`.
 
-  - `host`: Host for the miner server. Default is `localhost`.
+  * `host`: Host for the miner server. Default is `localhost`.
 
-  - `threads`: Number of threads. Default is `navigator.hardwareConcurrency` (number of CPU cores).
+  * `threads`: Number of threads. Default is `navigator.hardwareConcurrency` (number of CPU cores).
 
-  - `proxy`: Puppeteer's proxy socket 5/4 (ie: `socks5://127.0.0.1:9050`).
+  * `throttle`: The fraction of time that threads should be idle. Default is `0`.
 
-  - `launch`: The options that will be passed to `puppeteer.launch(options)`. See [Puppeteer Docs](https://github.com/GoogleChrome/puppeteer/blob/master/docs/api.md#puppeteerlaunchoptions).
+  * `proxy`: Puppeteer's proxy socket 5/4 (ie: `socks5://127.0.0.1:9050`).
 
-  - `pool`: This allows you to use a different pool. It has to be an [Stratum](https://en.bitcoin.it/wiki/Stratum_mining_protocol) based pool. This object must contain the following properties:
+  * `launch`: The options that will be passed to `puppeteer.launch(options)`. See [Puppeteer Docs](https://github.com/GoogleChrome/puppeteer/blob/master/docs/api.md#puppeteerlaunchoptions).
 
-      - `host`: The pool's host.
+  * `pool`: This allows you to use a different pool. It has to be an [Stratum](https://en.bitcoin.it/wiki/Stratum_mining_protocol) based pool. This object must contain the following properties:
 
-      - `port`: The pool's port.
+    * `host`: The pool's host.
 
-      - `pass`: The pool's password. If not provided the default one is `"x"`.
+    * `port`: The pool's port.
 
-  - `devFee`: A donation to send to the developer. Default is `0.001` (0.1%).
+    * `pass`: The pool's password. If not provided the default one is `"x"`.
 
-- `miner.start()`: Connect to the pool and start mining. Returns a promise that will resolve once the miner is started.
+  * `devFee`: A donation to send to the developer. Default is `0.001` (0.1%).
 
-- `miner.stop()`: Stop mining and disconnect from the pool. Returns a promise that will resolve once the miner is stopped.
+* `miner.start()`: Connect to the pool and start mining. Returns a promise that will resolve once the miner is started.
 
-- `miner.kill()`: Stop mining, disconnect from the pool, shutdown the server and close the headless browser. Returns a promise that will resolve once the miner is dead.
+* `miner.stop()`: Stop mining and disconnect from the pool. Returns a promise that will resolve once the miner is stopped.
 
-- `miner.on(event, callback)`: Specify a callback for an event. The event types are:
+* `miner.kill()`: Stop mining, disconnect from the pool, shutdown the server and close the headless browser. Returns a promise that will resolve once the miner is dead.
 
-  - `update`: Informs `hashesPerSecond`, `totalHashes` and `acceptedHashes`.
+* `miner.on(event, callback)`: Specify a callback for an event. The event types are:
 
-  - `open`:	The connection to our mining pool was opened. Usually happens shortly after miner.start() was called.
+  * `update`: Informs `hashesPerSecond`, `totalHashes` and `acceptedHashes`.
 
-  - `authed`:	The miner successfully authed with the mining pool and the siteKey was verified. Usually happens right after open.
+  * `open`: The connection to our mining pool was opened. Usually happens shortly after miner.start() was called.
 
-  - `close`:	The connection to the pool was closed. Usually happens when miner.stop() was called.
+  * `authed`: The miner successfully authed with the mining pool and the siteKey was verified. Usually happens right after open.
 
-  - `error`:	An error occured. In case of a connection error, the miner will automatically try to reconnect to the pool.
+  * `close`: The connection to the pool was closed. Usually happens when miner.stop() was called.
 
-  - `job`:	A new mining job was received from the pool.
+  * `error`: An error occured. In case of a connection error, the miner will automatically try to reconnect to the pool.
 
-  - `found`:	A hash meeting the pool's difficulty (currently 256) was found and will be send to the pool.
+  * `job`: A new mining job was received from the pool.
 
-  - `accepted`:	A hash that was sent to the pool was accepted.
+  * `found`: A hash meeting the pool's difficulty (currently 256) was found and will be send to the pool.
 
-- `miner.rpc(methodName, argsArray)`: This method allows you to interact with the CoinHive miner instance. It returns a Promise that resolves the the value of the remote method that was called. The miner instance API can be [found here](https://coin-hive.com/documentation/miner#miner-is-running). Here's an example:
+  * `accepted`: A hash that was sent to the pool was accepted.
+
+* `miner.rpc(methodName, argsArray)`: This method allows you to interact with the CoinHive miner instance. It returns a Promise that resolves the the value of the remote method that was called. The miner instance API can be [found here](https://coin-hive.com/documentation/miner#miner-is-running). Here's an example:
 
 ```js
 var miner = await CoinHive('SITE_KEY');
@@ -135,31 +138,33 @@ await miner.rpc('getThrottle'); // 0.5
 
 All the following environment variables can be used to configure the miner from the outside:
 
-- `COINHIVE_SITE_KEY`: CoinHive's Site Key
+* `COINHIVE_SITE_KEY`: CoinHive's Site Key
 
-- `COINHIVE_USERNAME`: Set a username to the miner. See [CoinHive.User](https://coinhive.com/documentation/miner#coinhive-user).
+* `COINHIVE_USERNAME`: Set a username to the miner. See [CoinHive.User](https://coinhive.com/documentation/miner#coinhive-user).
 
-- `COINHIVE_INTERVAL`: The interval on which the miner reports an update
+* `COINHIVE_INTERVAL`: The interval on which the miner reports an update
 
-- `COINHIVE_THREADS`: Number of threads
+* `COINHIVE_THREADS`: Number of threads
 
-- `COINHIVE_PORT`: The port that will be used to launch the server, and where puppeteer will point to
+* `COINHIVE_THROTTLE`: The fraction of time that threads should be idle
 
-- `COINHIVE_HOST`: The host that will be used to launch the server, and where puppeteer will point to
+* `COINHIVE_PORT`: The port that will be used to launch the server, and where puppeteer will point to
 
-- `COINHIVE_PUPPETEER_URL`: In case you don't want to point puppeteer to the local server, you can use this to make it point somewhere else where the miner is served (ie: `COINHIVE_PUPPETEER_URL=http://coin-hive.herokuapp.com`)
+* `COINHIVE_HOST`: The host that will be used to launch the server, and where puppeteer will point to
 
-- `COINHIVE_MINER_URL`: Set the CoinHive JavaScript Miner url. By defualt this is `https://coinhive.com/lib/coinhive.min.js`. You can set this to use a [CoinHive Proxy](https://github.com/cazala/coin-hive-proxy).
+* `COINHIVE_PUPPETEER_URL`: In case you don't want to point puppeteer to the local server, you can use this to make it point somewhere else where the miner is served (ie: `COINHIVE_PUPPETEER_URL=http://coin-hive.herokuapp.com`)
 
-- `COINHIVE_PROXY`: Puppeteer's proxy socket 5/4 (ie: `COINHIVE_PROXY=socks5://127.0.0.1:9050`)
+* `COINHIVE_MINER_URL`: Set the CoinHive JavaScript Miner url. By defualt this is `https://coinhive.com/lib/coinhive.min.js`. You can set this to use a [CoinHive Proxy](https://github.com/cazala/coin-hive-proxy).
 
-- `COINHIVE_DEV_FEE`: A donation to the developer, the default is 0.001 (0.1%).
+* `COINHIVE_PROXY`: Puppeteer's proxy socket 5/4 (ie: `COINHIVE_PROXY=socks5://127.0.0.1:9050`)
 
-- `COINHIVE_POOL_HOST`: A custom stratum pool host, it must be used in combination with `COINHIVE_POOL_PORT`.
+* `COINHIVE_DEV_FEE`: A donation to the developer, the default is 0.001 (0.1%).
 
-- `COINHIVE_POOL_PORT`: A custom stratum pool port, it must be used in combination with `COINHIVE_POOL_HOST`.
+* `COINHIVE_POOL_HOST`: A custom stratum pool host, it must be used in combination with `COINHIVE_POOL_PORT`.
 
-- `COINHIVE_POOL_PASS`: A custom stratum pool password, if not provided the default one is 'x'.
+* `COINHIVE_POOL_PORT`: A custom stratum pool port, it must be used in combination with `COINHIVE_POOL_HOST`.
+
+* `COINHIVE_POOL_PASS`: A custom stratum pool password, if not provided the default one is 'x'.
 
 ## FAQ
 
@@ -174,17 +179,19 @@ const CoinHive = require('coin-hive');
     pool: {
       host: 'la01.supportxmr.com',
       port: 3333,
-      pass: '<YOUR-PASSWORD-FOR-POOL>' // default 'x' if not provided 
+      pass: '<YOUR-PASSWORD-FOR-POOL>' // default 'x' if not provided
     }
   });
   await miner.start();
-  miner.on('found', () => console.log('Found!'))
-  miner.on('accepted', () => console.log('Accepted!'))
-  miner.on('update', data => console.log(`
+  miner.on('found', () => console.log('Found!'));
+  miner.on('accepted', () => console.log('Accepted!'));
+  miner.on('update', data =>
+    console.log(`
     Hashes per second: ${data.hashesPerSecond}
     Total hashes: ${data.totalHashes}
     Accepted hashes: ${data.acceptedHashes}
-  `));
+  `)
+  );
 })();
 ```
 
@@ -229,7 +236,7 @@ One of the features of Electroneum is that it has a difficulty of `100`, while C
 
 No, it violates the [TOS](https://www.heroku.com/policy/aup).
 
-Also, since Puppeteer requires some additional dependencies that aren't included on the Linux box that Heroku spins up for you, you need to go to your app's `Settings > Buildpacks`  first and add this url:
+Also, since Puppeteer requires some additional dependencies that aren't included on the Linux box that Heroku spins up for you, you need to go to your app's `Settings > Buildpacks` first and add this url:
 
 ```
 https://github.com/jontewks/puppeteer-heroku-buildpack
@@ -286,14 +293,13 @@ Try changing chromium's executable path to `/usr/bin/chromium-browser`, like thi
 ```js
 const miner = await CoinHive('site-key', {
   launch: {
-    executablePath: '/usr/bin/chromium-browser', 
+    executablePath: '/usr/bin/chromium-browser',
     args: ['--disable-setuid-sandbox', '--no-sandbox']
   }
 });
 ```
 
 For more info check issue [#54](https://github.com/cazala/coin-hive/issues/54)
-
 
 ## Disclaimer
 

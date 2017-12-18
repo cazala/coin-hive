@@ -42,6 +42,7 @@ let siteKeyMessage = 'Site key: ';
     port: argv.port || process.env.COINHIVE_PORT || defaults.port,
     host: argv.host || process.env.COINHIVE_HOST || defaults.host,
     threads: argv.threads || process.env.COINHIVE_THREADS || defaults.threads,
+    throttle: argv.throttle || process.env.COINHIVE_THROTTLE || defaults.throttle,
     proxy: argv.proxy || process.env.COINHIVE_PROXY || defaults.proxy,
     username: argv.username || process.env.COINHIVE_USERNAME || defaults.username,
     puppeteerUrl: argv['puppeteer-url'] || process.env.COINHIVE_PUPPETEER_URL || defaults.puppeteerUrl,
@@ -152,9 +153,9 @@ function logger(siteKey, options) {
 ${siteKeyMessage}${stratumPoolMessage}
 ${t.render()}
 
-${data.running ? spinner() : 'Stopped'} | Listening on ${options.host}:${options.port}${options.proxy
-      ? ` | Proxy: ${options.proxy}`
-      : ''} | ${data.threads || 0} Threads${data.autoThreads ? ' (auto)' : ''}
+${data.running ? spinner() : 'Stopped'} | Listening on ${options.host}:${options.port}${
+      options.proxy ? ` | Proxy: ${options.proxy}` : ''
+    } | ${data.threads || 0} Threads${data.autoThreads ? ' (auto)' : ''}
 
 s: Start/Stop | +/-: Threads | a: Auto threads | q/Ctrl-C: Quit
     `;

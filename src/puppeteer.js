@@ -2,7 +2,21 @@ const EventEmitter = require('events');
 const puppeteer = require('puppeteer');
 
 class Puppeteer extends EventEmitter {
-  constructor({ siteKey, interval, host, port, server, threads, proxy, username, url, devFee, pool, launch }) {
+  constructor({
+    siteKey,
+    interval,
+    host,
+    port,
+    server,
+    threads,
+    throttle,
+    proxy,
+    username,
+    url,
+    devFee,
+    pool,
+    launch
+  }) {
     super();
     this.inited = false;
     this.dead = false;
@@ -13,7 +27,7 @@ class Puppeteer extends EventEmitter {
     this.page = null;
     this.proxy = proxy;
     this.url = url;
-    this.options = { siteKey, interval, threads, username, devFee, pool };
+    this.options = { siteKey, interval, threads, throttle, username, devFee, pool };
     this.launch = launch || {};
   }
 
@@ -55,8 +69,8 @@ class Puppeteer extends EventEmitter {
     await page.exposeFunction('emitMessage', (event, message) => this.emit(event, message));
     await page.exposeFunction('update', (data, interval) => this.emit('update', data, interval));
     await page.evaluate(
-      ({ siteKey, interval, threads, username, devFee, pool }) =>
-        window.init({ siteKey, interval, threads, username, devFee, pool }),
+      ({ siteKey, interval, threads, throttle, username, devFee, pool }) =>
+        window.init({ siteKey, interval, threads, throttle, username, devFee, pool }),
       this.options
     );
 

@@ -32,6 +32,7 @@ module.exports = async function getRunner(siteKey, constructorOptions = defaults
           interval: options.interval,
           port: options.port,
           host: options.host,
+          throttle: options.throttle,
           threads: options.threads,
           server: minerServer,
           proxy: options.proxy,

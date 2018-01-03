@@ -227,7 +227,7 @@ Now your CoinHive miner would be mining on `MineKitten.io` pool, using your elec
 You can also do this using the CLI:
 
 ```
-coin-hive <YOUR-ELECTRONEUM-ADDRESS> --pool-host=etnpool.minekitten.com --pool-port=3333
+coin-hive <YOUR-ELECTRONEUM-ADDRESS> --pool-host=etnpool.minekitten.io --pool-port=3333
 ```
 
 One of the features of Electroneum is that it has a difficulty of `100`, while CoinHive's is `256`.

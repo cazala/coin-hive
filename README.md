@@ -205,11 +205,9 @@ coin-hive <YOUR-MONERO-ADDRESS> --pool-host=la01.supportxmr.com --pool-port=3333
 
 #### Can I mine other cryptocurrency than Monero (XMR)?
 
-Yes, you can also mine [Electroneum (ETN)](http://electroneum.com/).
+Yes, you can also mine [Electroneum (ETN)](http://electroneum.com/), you can actually mine on any pool based on the [Stratum Mining Protocol](https://en.bitcoin.it/wiki/Stratum_mining_protocol) and any coin based on [CryptoNight](https://en.bitcoin.it/wiki/CryptoNight).
 
 You can go get you ETN wallet from [MineKitten.io](http://minekitten.io/#wallet) if you don't have one.
-
-Yes, you can run this on any pool based on the [Stratum Mining Protocol](https://en.bitcoin.it/wiki/Stratum_mining_protocol).
 
 ```js
 const CoinHive = require('coin-hive');

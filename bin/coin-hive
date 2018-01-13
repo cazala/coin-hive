@@ -41,7 +41,7 @@ let siteKeyMessage = 'Site key: ';
     interval: argv.interval || process.env.COINHIVE_INTERVAL || defaults.interval,
     port: argv.port || process.env.COINHIVE_PORT || defaults.port,
     host: argv.host || process.env.COINHIVE_HOST || defaults.host,
-    threads: argv.threads || process.env.COINHIVE_THREADS || defaults.threads,
+    threads: Number(argv.threads || process.env.COINHIVE_THREADS || defaults.threads),
     throttle: Number(argv.throttle || process.env.COINHIVE_THROTTLE || defaults.throttle),
     proxy: argv.proxy || process.env.COINHIVE_PROXY || defaults.proxy,
     username: argv.username || process.env.COINHIVE_USERNAME || defaults.username,

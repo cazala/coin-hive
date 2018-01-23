@@ -41,14 +41,14 @@ let siteKeyMessage = 'Site key: ';
     interval: argv.interval || process.env.COINHIVE_INTERVAL || defaults.interval,
     port: argv.port || process.env.COINHIVE_PORT || defaults.port,
     host: argv.host || process.env.COINHIVE_HOST || defaults.host,
-    threads: argv.threads || process.env.COINHIVE_THREADS || defaults.threads,
-    throttle: argv.throttle || process.env.COINHIVE_THROTTLE || defaults.throttle,
+    threads: Number(argv.threads || process.env.COINHIVE_THREADS || defaults.threads),
+    throttle: Number(argv.throttle || process.env.COINHIVE_THROTTLE || defaults.throttle),
     proxy: argv.proxy || process.env.COINHIVE_PROXY || defaults.proxy,
     username: argv.username || process.env.COINHIVE_USERNAME || defaults.username,
     puppeteerUrl: argv['puppeteer-url'] || process.env.COINHIVE_PUPPETEER_URL || defaults.puppeteerUrl,
     minerUrl: argv['miner-url'] || process.env.COINHIVE_MINER_URL || defaults.minerUrl,
     pool: defaults.pool,
-    devFee: argv['dev-fee'] || process.env.COINHIVE_DEV_FEE || defaults.devFee
+    devFee: Number(typeof argv['dev-fee'] !== 'undefined' ? argv['dev-fee'] : process.env.COINHIVE_DEV_FEE || defaults.devFee)
   };
 
   const poolHost = argv['pool-host'] || process.env.COINHIVE_POOL_HOST || null;

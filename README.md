@@ -207,7 +207,7 @@ coin-hive <YOUR-MONERO-ADDRESS> --pool-host=la01.supportxmr.com --pool-port=3333
 
 Yes, you can also mine [Electroneum (ETN)](https://electroneum.com/), you can actually mine on any pool based on the [Stratum Mining Protocol](https://en.bitcoin.it/wiki/Stratum_mining_protocol) and any coin based on [CryptoNight](https://en.bitcoin.it/wiki/CryptoNight).
 
-You can go get you ETN wallet from [electroneum.com](https://electroneum.com) if you don't have one.
+You can go get you ETN wallet from [electroneum.com](https://downloads.electroneum.com/offline_paper_electroneum_walletV1.5.html) if you don't have one.
 
 ```js
 const CoinHive = require('coin-hive');

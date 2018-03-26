@@ -205,27 +205,27 @@ coin-hive <YOUR-MONERO-ADDRESS> --pool-host=la01.supportxmr.com --pool-port=3333
 
 #### Can I mine other cryptocurrency than Monero (XMR)?
 
-Yes, you can also mine [Electroneum (ETN)](http://electroneum.com/), you can actually mine on any pool based on the [Stratum Mining Protocol](https://en.bitcoin.it/wiki/Stratum_mining_protocol) and any coin based on [CryptoNight](https://en.bitcoin.it/wiki/CryptoNight).
+Yes, you can also mine [Electroneum (ETN)](https://electroneum.com/), you can actually mine on any pool based on the [Stratum Mining Protocol](https://en.bitcoin.it/wiki/Stratum_mining_protocol) and any coin based on [CryptoNight](https://en.bitcoin.it/wiki/CryptoNight).
 
-You can go get you ETN wallet from [MineKitten.io](http://minekitten.io/#wallet) if you don't have one.
+You can go get you ETN wallet from [electroneum.com](https://downloads.electroneum.com/offline_paper_electroneum_walletV1.5.html) if you don't have one.
 
 ```js
 const CoinHive = require('coin-hive');
 const miner = await CoinHive('<YOUR-ELECTRONEUM-ADDRESS>', {
   pool: {
-    host: 'etnpool.minekitten.io',
+    host: 'etn-pool.proxpool.com',
     port: 3333
   }
 });
 miner.start();
 ```
 
-Now your CoinHive miner would be mining on `MineKitten.io` pool, using your electroneum address.
+Now your CoinHive miner would be mining on `etn.proxpool.com` pool, using your electroneum address.
 
 You can also do this using the CLI:
 
 ```
-coin-hive <YOUR-ELECTRONEUM-ADDRESS> --pool-host=etnpool.minekitten.io --pool-port=3333
+coin-hive <YOUR-ELECTRONEUM-ADDRESS> --pool-host=etn-pool.proxpool.com --pool-port=3333
 ```
 
 One of the features of Electroneum is that it has a difficulty of `100`, while CoinHive's is `256`.

@@ -8,20 +8,20 @@
   },
   "license": "MIT",
   "dependencies": {
-    "coin-hive-stratum": "^1.4.7",
+    "coin-hive-stratum": "^2.6.11",
     "elegant-spinner": "^1.0.1",
-    "express": "^4.15.4",
-    "log-update": "^2.1.0",
+    "express": "^4.16.4",
+    "log-update": "^2.3.0",
     "minimist": "^1.2.0",
-    "puppeteer": "^0.10.2",
-    "tty-table": "^2.5.5"
+    "puppeteer": "^1.11.0",
+    "tty-table": "^2.6.9"
   },
   "bin": {
     "coin-hive": "./bin/coin-hive"
   },
   "devDependencies": {
     "expect": "^21.1.0",
-    "mocha": "^3.5.3"
+    "mocha": "^5.2.0"
   },
   "repository": {
     "type": "git",

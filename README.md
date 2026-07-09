@@ -1,4 +1,4 @@
-# CoinHive [![Build Status](https://travis-ci.org/cazala/coin-hive.svg?branch=master)](https://travis-ci.org/cazala/coin-hive)
+# CoinHive
 
 Mine cryptocurrencies [Monero (XMR)](https://getmonero.org/) and [Electroneum (ETN)](http://electroneum.com/) using [CoinHive](https://coinhive.com/) from node.js
 
